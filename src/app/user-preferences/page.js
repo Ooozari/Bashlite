@@ -1,8 +1,8 @@
 import React from 'react'
-import {Home} from '@/views'
+import {UserPreferences} from '@/views'
 function Page() {
   return (
-    <Home />
+    <UserPreferences />
   )
 }
 

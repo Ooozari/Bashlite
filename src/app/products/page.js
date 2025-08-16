@@ -1,8 +1,8 @@
 import React from 'react'
-import {Home} from '@/views'
+import {Product} from '@/views'
 function Page() {
   return (
-    <Home />
+    <Product />
   )
 }
 
