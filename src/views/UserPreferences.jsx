@@ -18,7 +18,7 @@ import {
     DialogDescription
 } from "@/components/ui/dialog";
 import { ErrorMessage } from '@/components/shared'
-import { EditProfileSchema } from '@/validations';
+import { EditProfileSchema,AddMovieSchema,AddBookSchema } from '@/validations';
 import {
     Select,
     SelectContent,
@@ -32,6 +32,8 @@ function UserPreferences() {
     let email = "abc@gmail.com"
     const [preview, setPreview] = useState(avatarUrl);
     const [openEditProfileDialog, setopenEditProfileDialog] = useState(false);
+    const [openAddMovieDialog, setopenAddMovieDialog] = useState(false);
+    const [openAddBookDialog, setopenAddBookDialog] = useState(false);
 
     const editProfileFormik = useFormik({
         initialValues: {
@@ -45,6 +47,27 @@ function UserPreferences() {
             // API call goes here
         },
     });
+    const addMovieFormik = useFormik({
+        initialValues: {
+            movie: "",
+        },
+        validationSchema: AddMovieSchema,
+        onSubmit: (values) => {
+            console.log('Updated Profile:', values);
+            // API call goes here
+        },
+    });
+    const addBookFormik = useFormik({
+        initialValues: {
+            book: "",
+        },
+        validationSchema: AddBookSchema,
+        onSubmit: (values) => {
+            console.log('Updated Profile:', values);
+            // API call goes here
+        },
+    });
+
     const handleFileChange = (event) => {
         const file = event.currentTarget.files[0];
         if (file) {
@@ -56,9 +79,10 @@ function UserPreferences() {
 
     return (
         <>
+
             {/* heading */}
-            <div>
-                <Heading level='pageheading' className="font-extrabold text-textDark">User Preferences</Heading>
+            <div className='px-[20px]'>
+                <Heading level='pageheading' className="font-[700] text-dark font-roboto">User Preferences</Heading>
             </div>
             {/* section */}
             <div className='flex flex-col gap-10  max-w-full px-10'>
@@ -76,8 +100,8 @@ function UserPreferences() {
                             />
                         </div>
                         <div>
-                            <Heading level="medium" className="font-[700] text-textDark">{username}</Heading>
-                            <Paragraph size='large' className="font-[500] text-textNormal">{email}</Paragraph>
+                            <Heading level="medium" className="font-[700] text-dark">{username}</Heading>
+                            <Paragraph size='medium' className="font-[500] text-light">{email}</Paragraph>
                         </div>
 
                     </div>
@@ -87,61 +111,168 @@ function UserPreferences() {
                         <Button onClick={() => setopenEditProfileDialog(true)}>
                             <Paragraph size="btntext" className="flex items-center gap-1">
                                 <span><Pencil /></span>
-                                <span>Edit</span>
+                                <span>Edit profile</span>
                             </Paragraph>
                         </Button>
                     </div>
                 </div>
 
-                {/* themeSetting */}
-                <div className="border border-gray-500 rounded-[4px] px-6 pt-6 pb-4 relative">
-                    <div className="absolute -top-3 left-6 px-2 bg-amber-400 rounded-[2px]">
-                        <Heading
-                            className="text-gray-700"
-                            level="normal"
-                        >
-                            Theme Setting
-                        </Heading>
-                    </div>
+                <div className='flex flex-col gap-[20px] mb-[100px]'>
+                    {/* themeSetting */}
+                    <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
+                        <div className="relative inline">
+                            <Heading
+                                className="text-dark font-[600] font-roboto relative pb-2"
+                                level="sectionheading"
+                            >
+                                Theme Setting
+                            </Heading>
+                            <span className="absolute left-0 bottom-0 w-full h-[1px] bg-primary rounded"></span>
+                        </div>
 
-                    <div className='flex justify-between items-center'>
-                        <Paragraph size='large' className="font-[600] text-textNormal" >Theme mode</Paragraph>
-                        <Select>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Theme" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className='flex justify-between items-center'>
-                        <Paragraph size='large' className="font-[600] text-textNormal">Theme color</Paragraph>
-                        {/* Theme color preview blocks */}
-                        <div className="flex gap-4 mt-4">
-                            {/* Purple theme */}
-                            <div className="flex items-center gap-1">
-                                <div className="w-5 h-5 rounded bg-[#816bff]" />
-                                <Paragraph size="sm">Purple</Paragraph>
+                        <div className='flex flex-col gap-[20px] md:gap-[10px]'>
+                            <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
+                                <div className='flex flex-col'>
+                                    <Heading level='normal' className="text-dark font-[700]">Mode</Heading>
+                                    <Paragraph size='normal' className="font-[500] text-light" >Choose between Light, Dark, or System default appearance.</Paragraph>
+                                </div>
+
+                                <Select>
+                                    <SelectTrigger className="w-full md:w-[180px]">
+                                        <SelectValue placeholder="Select theme" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="light">Light</SelectItem>
+                                        <SelectItem value="dark">Dark</SelectItem>
+                                        <SelectItem value="system">System</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
+                            <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
+                                <div className='flex flex-col'>
+                                    <Heading level='normal' className="text-dark font-[700]">Color scheme</Heading>
+                                    <Paragraph size='normal' className="font-[500] text-light">Pick your preferred accent color to personalize the interface.</Paragraph>
+                                </div>
 
-                            {/* Blue theme */}
-                            <div className="flex items-center gap-1">
-                                <div className="w-5 h-5 rounded bg-[#3B82F6]" />
-                                <Paragraph size="sm">Blue</Paragraph>
-                            </div>
+                                {/* Theme color preview blocks */}
+                                <Select>
+                                    <SelectTrigger className="w-full md:w-[180px]">
+                                        <SelectValue placeholder="Select scheme" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="purple"><div className="flex items-center gap-1">
+                                            <div className="w-5 h-5 rounded bg-[#816bff]" />
+                                            <Paragraph size="sm">Purple</Paragraph>
+                                        </div></SelectItem>
+                                        <SelectItem value="blue"><div className="flex items-center gap-1">
+                                            <div className="w-5 h-5 rounded bg-[#3B82F6]" />
+                                            <Paragraph size="sm">Blue</Paragraph>
+                                        </div>
+                                        </SelectItem>
+                                        <SelectItem value="green"><div className="flex items-center gap-1">
+                                            <div className="w-5 h-5 rounded bg-[#22C55E]" />
+                                            <Paragraph size="sm">Green</Paragraph>
+                                        </div></SelectItem>
+                                    </SelectContent>
+                                </Select>
 
-                            {/* Green theme */}
-                            <div className="flex items-center gap-1">
-                                <div className="w-5 h-5 rounded bg-[#22C55E]" />
-                                <Paragraph size="sm">Green</Paragraph>
                             </div>
                         </div>
+
+                    </div>
+                    {/* Favorite items list */}
+                    <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
+                        <div className="relative inline">
+                            <Heading
+                                className="text-dark font-[600] font-roboto relative pb-2"
+                                level="sectionheading"
+                            >
+                                Favorite items
+                            </Heading>
+                            <span className="absolute left-0 bottom-0 w-full h-[1px] bg-primary rounded"></span>
+                        </div>
+
+                        <div className='flex flex-col gap-[20px] md:gap-[10px]'>
+                            {/* movies */}
+                            <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
+                                <div className='flex flex-col gap-[8px]'>
+                                    <Heading level='medium' className="text-dark font-[700]">Movies</Heading>
+                                    <Paragraph size='sm' className="">
+                                        <span className='font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>KingsMan</span>
+                                        </Paragraph>
+                                </div>
+                                <div className='flex gap-2'>
+                                    <Button className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
+                                        <Paragraph size="btntext" className="font-[700]">
+                                            Delete
+                                        </Paragraph>
+                                    </Button>
+                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1 " variant="ghost" onClick={()=> (setopenAddMovieDialog(true))}>
+                                        <Paragraph size="btntext" className="font-[700]">
+                                            + Add
+                                        </Paragraph>
+                                    </Button>
+                                </div>
+
+                            </div>
+                            {/* books */}
+                            <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
+                                <div className='flex flex-col gap-[8px]'>
+                                    <Heading level='medium' className="text-dark font-[700]">Books</Heading>
+                                    <Paragraph size='sm'>
+                                        <span className='font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>War And Peace</span>
+                                       </Paragraph>
+                                </div>
+                                <div className='flex gap-2'>
+                                    <Button className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
+                                        <Paragraph size="btntext" className="font-[700]">
+                                            Delete
+                                        </Paragraph>
+                                    </Button>
+                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1 " variant="ghost" onClick={()=> (setopenAddBookDialog(true))}>
+                                        <Paragraph size="btntext" className="font-[700]">
+                                            + Add
+                                        </Paragraph>
+                                    </Button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    {/* Reset all local storage data */}
+                    <div className="border bg-destructive/5 rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
+                        <div className="relative inline">
+                            <Heading
+                                className="text-destructive font-[600] font-roboto relative pb-2"
+                                level="sectionheading"
+                            >
+                                Reset Data
+                            </Heading>
+                            <span className="absolute left-0 bottom-0 w-full h-[1px] bg-destructive rounded"></span>
+                        </div>
+
+                        <div className='flex flex-col gap-[20px] md:gap-[10px]'>
+                            <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
+                                <div className='flex flex-col'>
+                                    <Heading level='normal' className="text-dark font-[700]">Clear Local Storage</Heading>
+                                    <Paragraph size='normal' className="font-[500] text-light">Permanently remove all saved preferences, products, and blogs from local storage. This action cannot be undone.</Paragraph>
+                                </div>
+                                <Button className="" variant="destructive">
+                                    <Paragraph size="btntext" className="font-[700]">
+                                        Reset All Data
+                                    </Paragraph>
+                                </Button>
+
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
+
+
 
             {/* Edit Profile*/}
             <Dialog open={openEditProfileDialog} onOpenChange={setopenEditProfileDialog}>
@@ -233,6 +364,89 @@ function UserPreferences() {
                         </div>
                         <Button type="submit" className="w-full">
                             <Paragraph size="btntext">Update Profile</Paragraph>
+                        </Button>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+
+            {/*Add movie*/}
+            <Dialog open={openAddMovieDialog} onOpenChange={setopenAddMovieDialog}>
+                <DialogContent className='xs:w-[400px] sm:w-[440px] md:w-[480px] lg:w-[490px] xl:w-[500px] 2xl:w-[540px] '>
+                    <DialogHeader>
+                        <DialogTitle className="text-start">Add a New Movie</DialogTitle>
+                        <DialogDescription>Enter the movie name below to add it to your favorites list.</DialogDescription>
+                    </DialogHeader>
+                    <form
+                        onSubmit={addMovieFormik.handleSubmit}
+                        className="grid gap-6"
+                    >
+                        <div className="flex flex-col gap-2 w-full">
+                            <Label htmlFor="movie">
+                                <Paragraph size="label">Movie name</Paragraph>
+                            </Label>
+
+                            <div className="relative">
+                                <Input
+                                    id="movie"
+                                    name="movie"
+                                    placeholder="Enter movie name"
+                                    value={addMovieFormik.values.movie}
+                                    onChange={addMovieFormik.handleChange}
+                                    onBlur={addMovieFormik.handleBlur}
+                                    className="w-full"
+                                />
+                                {addMovieFormik.touched.movie && addMovieFormik.errors.movie && (
+                                    <ErrorMessage
+                                        error={addMovieFormik.errors.movie}
+                                        touched={addMovieFormik.touched.movie}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                        <Button type="submit" className="w-full">
+                            <Paragraph size="btntext">Add movie</Paragraph>
+                        </Button>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            {/*Add book*/}
+            <Dialog open={openAddBookDialog} onOpenChange={setopenAddBookDialog}>
+                <DialogContent className='xs:w-[400px] sm:w-[440px] md:w-[480px] lg:w-[490px] xl:w-[500px] 2xl:w-[540px] '>
+                    <DialogHeader>
+                        <DialogTitle className="text-start">Add a New Book</DialogTitle>
+                        <DialogDescription>Enter the book name below to add it to your favorites list.</DialogDescription>
+                    </DialogHeader>
+                    <form
+                        onSubmit={addBookFormik.handleSubmit}
+                        className="grid gap-6"
+                    >
+                        <div className="flex flex-col gap-2 w-full">
+                            <Label htmlFor="book">
+                                <Paragraph size="label">Book name</Paragraph>
+                            </Label>
+
+                            <div className="relative">
+                                <Input
+                                    id="book"
+                                    name="book"
+                                    placeholder="Enter book name"
+                                    value={addBookFormik.values.book}
+                                    onChange={addBookFormik.handleChange}
+                                    onBlur={addBookFormik.handleBlur}
+                                    className="w-full"
+                                />
+                                {addBookFormik.touched.book && addBookFormik.errors.book && (
+                                    <ErrorMessage
+                                        error={addBookFormik.errors.book}
+                                        touched={addBookFormik.touched.book}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                        <Button type="submit" className="w-full">
+                            <Paragraph size="btntext">Add book</Paragraph>
                         </Button>
                     </form>
                 </DialogContent>

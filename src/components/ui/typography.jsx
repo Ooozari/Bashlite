@@ -1,0 +1,58 @@
+import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
+
+
+/* --- Headings --- */
+const headingVariants = cva(
+    "",
+    {
+        variants: {
+            level: {
+                h1: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-[64px]",
+                normal: "text-[14px] md:text-[16px]",
+                medium: "text-[16px] md:text-[18px]",
+                pageheading: "text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] xl:text-[32px] 2xl:text-[36px] leading-[1.2]",
+                sectionheading: "text-[20px] sm:text-[21px] md:text-[22px] lg:text-[24px] xl:text-[25px] 2xl:text-[26px] leading-[1.3]",
+               
+
+            },
+        },
+        defaultVariants: { level: "h1" },
+    }
+);
+const headingTagMap = {
+    h1: "h1",
+    normal: "p",
+    medium: "p",
+    pageheading: "h2",
+    sectionheading: "h3",
+};
+
+export function Heading({ className, level = "h1", children }) {
+    const Tag = headingTagMap[level] || "p"; // ✅ safe mapping
+    return (
+        <Tag className={cn(headingVariants({ level }), className)}>
+            {children}
+        </Tag>
+    );
+}
+
+
+/* --- Paragraph --- */
+const paragraphVariants = cva("", {
+    variants: {
+        size: {
+            large: "text-[14px] md:text-[16px]",
+            normal: "text-[12px] md:text-[14px]",
+            label: "text-[12px] md:text-[14px] font-[700]",
+            btntext: "text-[14px] md:text-[16px] font-[500]",
+             sm: "text-[12px]",
+
+        },
+    },
+    defaultVariants: { size: "label" },
+});
+
+export function Paragraph({ className, size = "label", children }) {
+    return <p className={cn(paragraphVariants({ size }), className)}>{children}</p>;
+}
