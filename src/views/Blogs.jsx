@@ -1,27 +1,13 @@
 "use client";
 import React, { useState } from 'react'
-import { Button } from "@/components/ui/button"
 import { Heading, Paragraph } from '@/components/ui/typography'
-import { BlogCard } from '@/components/shared'
-import { useFormik } from 'formik';
-import { AddBlogSchema } from '@/validations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { ErrorMessage } from '@/components/shared'
-import WriteBlog from '@/components/shared/WriteBlog';
-import DisplayBlogs from '@/components/shared/DisplayBlogs';
-
-
+import {WriteBlog,BlogTable, DisplayBlogs} from '@/components/shared';
 
 function Blogs() {
-    
+
     return (
         <>
-
-            
-
             <div>
                 {/* Page Header */}
                 <div className="mb-6">
@@ -31,15 +17,17 @@ function Blogs() {
                     </Paragraph>
                 </div>
 
-               <Tabs defaultValue="blogs">
-                <TabsList>
-                    <TabsTrigger value="blogs">View Blogs</TabsTrigger>
-                    <TabsTrigger value="writeBlogs">Write a Blog</TabsTrigger>
-                </TabsList>
-                <TabsContent value="writeBlogs">
-                    <WriteBlog/> </TabsContent>
-                <TabsContent value="blogs"><DisplayBlogs /></TabsContent>
-            </Tabs>               
+                <Tabs defaultValue="blogs">
+                    <TabsList>
+                        <TabsTrigger value="blogs">All Blogs</TabsTrigger>
+                        <TabsTrigger value="writeBlogs">Create Blog</TabsTrigger>
+                        <TabsTrigger value="blogTable">Manage Blogs</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="writeBlogs">
+                        <WriteBlog /> </TabsContent>
+                    <TabsContent value="blogs"><DisplayBlogs /></TabsContent>
+                    <TabsContent value="blogTable"><BlogTable /></TabsContent>
+                </Tabs>
             </div>
 
 

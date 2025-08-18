@@ -26,7 +26,7 @@ function WriteBlog() {
                 <div className='md:w-[75%] w-full mx-auto'>
                     <div>
                         {/* Form Heading */}
-                        <div className='mb-4 md:mb-6 text-center'>
+                        <div className='mb-5 md:mb-6 text-center'>
                             <Heading level='h4' className="font-extrabold font-roboto text-normal">Share Your Thoughts</Heading>
                             <Paragraph size='large' className="text-light font-[500]">
                                 Write a new blog post and inspire your readers with your ideas.
