@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { loadFromLocalStorage } from "@/libs/storage";
 
 
-const defaultState =  {
+const defaultState = {
     username: "Uzair Asif",
     email: "abc@gmail.com",
     avatar: null,
@@ -28,46 +28,51 @@ const initialState = loadFromLocalStorage("userPreferences", defaultState);
 // SLices
 
 export const userPreferencesSlice = createSlice({
-    name: "storePreferences",
+    name: "userPreferences",
     initialState,
     // list of reducers
     reducers: {
         updateProfile: (state, action) => {
-            state.username = action.payload.username || state.username
-            state.email = action.payload.email || state.email
-            state.avatar = action.payload.avatar || state.avatar
+            state.username = action.payload.username
+            state.email = action.payload.email
+            state.avatar = action.payload.avatar
 
         },
         updateTheme: (state, action) => {
             state.theme = action.payload.theme
 
         },
-        updateColorTheme: (state, action) => {
-            state.theme = action.payload.theme
-
-        },
+        // updateColorTheme: (state, action) => {
+        //     state.theme = action.payload.theme
+        // },
 
         // Favorites 
         addFavorites: (state, action) => {
             const { category, item } = action.payload;
-            if (state.favorites[category]) {
-                state.favorites[category].push(item)
-            } else {
-                state.favorites[category].push(item)
+            if (!state.favorites[category]) {
+                state.favorites[category] = []; // initialize if missing
             }
+            state.favorites[category].push(item)
+            
 
         },
         removeFavorites: (state, action) => {
             const { category, item } = action.payload;
             if (state.favorites[category]) {
                 state.favorites[category] = state.favorites[category].filter(fav => fav !== item)
-
+            }
+        },
+        removeAllFavorites: (state, action) => {
+            const { category } = action.payload;
+            if (state.favorites[category]) {
+                state.favorites[category] = []
             }
         },
 
-        setSessionHistory: (state, action) => {
-            state.theme = action.payload.theme
-        }
+
+        // setSessionHistory: (state, action) => {
+        //     state.theme = action.payload.theme
+        // },
 
     }
 })
@@ -75,11 +80,12 @@ export const userPreferencesSlice = createSlice({
 export const {
     updateProfile,
     updateTheme,
-    updateColorTheme,
-    addFavorite,
-    removeFavorite,
-    setSessionHistory,
-    resetPreferences
+    // updateColorTheme,
+    addFavorites,
+    removeFavorites,
+    removeAllFavorites,
+    // setSessionHistory,
+    // resetPreferences
 } = userPreferencesSlice.actions;
 
 export default userPreferencesSlice.reducer;

@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
-import { User } from 'lucide-react';
+import { User, Pencil, X } from 'lucide-react';
 import avatarUrl from "@/assets/pic.jpg"
-import { Pencil } from 'lucide-react'
+import { addFavorites, removeFavorites,removeAllFavorites } from "@/features/userPreferencesSlice"
 import {
     Dialog,
     DialogContent,
@@ -29,22 +29,18 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
-import { updateProfile } from "@/features/userPreferencesSlice";
+import { updateProfile, } from "@/features/userPreferencesSlice";
 
 function UserPreferences() {
     const dispatch = useDispatch();
     const userPreferences = useSelector((state) => state.userPreferences);
+    console.log("userPreferences", userPreferences);
     const [preview, setPreview] = useState(userPreferences.avatar)
     const [openEditProfileDialog, setopenEditProfileDialog] = useState(false);
     const [openAddMovieDialog, setopenAddMovieDialog] = useState(false);
     const [openAddBookDialog, setopenAddBookDialog] = useState(false);
     const [openConfirmResetDialog, setopenConfirmResetDialog] = useState(false);
 
-    // <-- Add this useEffect here
-    useEffect(() => {
-    localStorage.setItem("userPreferences", JSON.stringify(userPreferences));
-  }, [userPreferences]);
 
     const editProfileFormik = useFormik({
         initialValues: {
@@ -55,45 +51,65 @@ function UserPreferences() {
         validationSchema: EditProfileSchema,
         enableReinitialize: true,
         onSubmit: (values) => {
-            // Update Redux store
-            dispatch(updateProfile(values));
-
-            // Update preview if avatar changed
-            if (values.avatar) {
-                const previewURL = URL.createObjectURL(values.avatar);
-                setPreview(previewURL);
-
-                setopenEditProfileDialog(false); // close dialog
-            }
+            const avatarUrl = values.avatar instanceof File
+                ? URL.createObjectURL(values.avatar)
+                : values.avatar;
+            dispatch(updateProfile({
+                username: values.username,
+                email: values.email,
+                avatar: values.avatar
+            }));
+            setopenEditProfileDialog(false);
         },
+
     });
+
     const addMovieFormik = useFormik({
         initialValues: {
             movie: "",
         },
         validationSchema: AddMovieSchema,
-        onSubmit: (values) => {
-            console.log('Updated Profile:', values);
-            // API call goes here
+        onSubmit: (values, { resetForm }) => {
+            dispatch(
+                addFavorites({
+                    category: "movies",
+                    item: values.movie,
+                })
+            );
+            resetForm();
+            setopenAddMovieDialog(false)
         },
     });
+
+    const movies = useSelector((state) => state.userPreferences.favorites.movies);
     const addBookFormik = useFormik({
         initialValues: {
             book: "",
         },
         validationSchema: AddBookSchema,
-        onSubmit: (values) => {
-            console.log('Updated Profile:', values);
-            // API call goes here
+        onSubmit: (values,{ resetForm }) => {
+            dispatch(
+                addFavorites({
+                    category: "books",
+                    item: values.book,
+                })
+            );
+            resetForm();
+            setopenAddBookDialog(false)
         },
     });
+    const books = useSelector((state) => state.userPreferences.favorites.books);
 
     const handleFileChange = (event) => {
         const file = event.currentTarget.files[0];
         if (file) {
-            editProfileFormik.setFieldValue("avatar", file);
-            const previewURL = URL.createObjectURL(file);
-            setPreview(previewURL);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // store base64 string inside formik
+                editProfileFormik.setFieldValue("avatar", reader.result);
+                setPreview(reader.result); // for preview
+            };
+            reader.readAsDataURL(file); // convert to base64
         }
     };
 
@@ -114,14 +130,14 @@ function UserPreferences() {
                         {/* Avtar */}
                         {preview && preview !== "" ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18'>
                             <img
-                                src={preview}
+                                src={userPreferences.avatar}
                                 alt="user avatar"
                                 className="object-cover w-full h-full rounded-[4px]"
                             />
                         </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-red-100'>
                             <User className="w-5 h-5 text-gray-400" />
                         </div>)}
-                        
+
                         <div>
                             <Heading level="medium" className="font-[700] text-dark">{userPreferences.username}</Heading>
                             <Paragraph size='medium' className="font-[500] text-light">{userPreferences.email}</Paragraph>
@@ -220,18 +236,36 @@ function UserPreferences() {
                             <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
                                 <div className='flex flex-col gap-[8px]'>
                                     <Heading level='medium' className="text-dark font-[700]">Movies</Heading>
-                                    <Paragraph size='sm' className="">
-                                        <span className='font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>KingsMan</span>
+                                    <Paragraph size='sm' className="flex gap-1 flex-wrap">
+                                        {movies && movies.length > 0 ? (
+                                            movies.map((movies, index) => (
+                                                <span
+                                                    key={index}
+                                                    className='flex gap-1 items-center font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>{movies} <X onClick={() =>
+                                                        dispatch(
+                                                            removeFavorites({
+                                                                category: "movies",
+                                                                item: movies,
+                                                            })
+                                                        )
+                                                    }
+                                                        className="size-3 cursor-pointer" /></span>
+                                            )
+                                            )
+                                        ) : (<Paragraph size="normal" className='font-[500] text-light'>No movies found</Paragraph>)}
+
                                     </Paragraph>
                                 </div>
                                 <div className='flex gap-2'>
-                                    <Button className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
-                                        <Paragraph size="btntext">
+                                    <Button 
+                                    onClick={()=> (dispatch(removeAllFavorites({ category: "movies",})))}
+                                     className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
+                                        <Paragraph size="btntext" className='font-bold'>
                                             Delete
                                         </Paragraph>
                                     </Button>
-                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1 " variant="ghost" onClick={() => (setopenAddMovieDialog(true))}>
-                                        <Paragraph size="btntext">
+                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1" variant="ghost" onClick={() => (setopenAddMovieDialog(true))}>
+                                        <Paragraph size="btntext" className="font-bold">
                                             + Add
                                         </Paragraph>
                                     </Button>
@@ -242,12 +276,30 @@ function UserPreferences() {
                             <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
                                 <div className='flex flex-col gap-[8px]'>
                                     <Heading level='medium' className="text-dark font-[700]">Books</Heading>
-                                    <Paragraph size='sm'>
-                                        <span className='font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>War And Peace</span>
+                                    <Paragraph size='sm' className="flex gap-1 flex-wrap">
+                                        {books && books.length > 0 ? (
+                                            books.map((book, index) => (
+                                                <span
+                                                    key={index}
+                                                    className='flex gap-1 items-center font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>{book} <X onClick={() =>
+                                                        dispatch(
+                                                            removeFavorites({
+                                                                category: "books",
+                                                                item: book,
+                                                            })
+                                                        )
+                                                    }
+                                                        className="size-3 cursor-pointer" /></span>
+                                            )
+                                            )
+                                        ) : (<Paragraph size="normal" className='font-[500] text-light'>No book found</Paragraph>)}
+
                                     </Paragraph>
                                 </div>
                                 <div className='flex gap-2'>
-                                    <Button className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
+                                    <Button 
+                                    onClick={()=> (dispatch(removeAllFavorites({ category: "books",})))}
+                                    className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
                                         <Paragraph size="btntext" className="font-[700]">
                                             Delete
                                         </Paragraph>
@@ -310,27 +362,27 @@ function UserPreferences() {
                             {/* Profile Picture Field */}
                             <div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative'>
                                 <Image
-                                    src={preview}
+                                    src={editProfileFormik.values.avatar || avatarUrl}
                                     alt="user avatar"
                                     fill
                                     className="object-cover w-full h-full rounded-[4px]"
                                 />
                             </div>
                             <div className="flex flex-col gap-2 w-full">
-                                <Label htmlFor="profilePicture">
+                                <Label htmlFor="avatar">
                                     <Paragraph size="label">Profile Picture</Paragraph>
                                 </Label>
                                 <div className='relative'>
                                     <Input
-                                        id="profilePicture"
-                                        name="profilePicture"
+                                        id="avatar"
+                                        name="avatar"
                                         type="file"
                                         accept="image/*"
                                         onChange={handleFileChange}
                                     />
                                     <ErrorMessage
-                                        error={editProfileFormik.errors.profilePicture}
-                                        touched={editProfileFormik.touched.profilePicture}
+                                        error={editProfileFormik.errors.avatar}
+                                        touched={editProfileFormik.touched.avatar}
                                     />
                                 </div>
                             </div>
@@ -345,7 +397,6 @@ function UserPreferences() {
                                 <Input
                                     id="email"
                                     name="email"
-                                    type="email"
                                     placeholder="Enter your email"
                                     value={editProfileFormik.values.email}
                                     onChange={editProfileFormik.handleChange}
