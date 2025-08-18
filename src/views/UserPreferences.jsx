@@ -1,11 +1,14 @@
 'use client';
-import React, { useState } from 'react'
+
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from 'formik';
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
+import { User } from 'lucide-react';
 import avatarUrl from "@/assets/pic.jpg"
 import { Pencil } from 'lucide-react'
 import {
@@ -18,7 +21,7 @@ import {
     DialogDescription
 } from "@/components/ui/dialog";
 import { ErrorMessage } from '@/components/shared'
-import { EditProfileSchema,AddMovieSchema,AddBookSchema } from '@/validations';
+import { EditProfileSchema, AddMovieSchema, AddBookSchema } from '@/validations';
 import {
     Select,
     SelectContent,
@@ -27,24 +30,41 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
+import { updateProfile } from "@/features/userPreferencesSlice";
+
 function UserPreferences() {
-    let username = "Uzair Asif"
-    let email = "abc@gmail.com"
-    const [preview, setPreview] = useState(avatarUrl);
+    const dispatch = useDispatch();
+    const userPreferences = useSelector((state) => state.userPreferences);
+    const [preview, setPreview] = useState(userPreferences.avatar)
     const [openEditProfileDialog, setopenEditProfileDialog] = useState(false);
     const [openAddMovieDialog, setopenAddMovieDialog] = useState(false);
     const [openAddBookDialog, setopenAddBookDialog] = useState(false);
+    const [openConfirmResetDialog, setopenConfirmResetDialog] = useState(false);
+
+    // <-- Add this useEffect here
+    useEffect(() => {
+    localStorage.setItem("userPreferences", JSON.stringify(userPreferences));
+  }, [userPreferences]);
 
     const editProfileFormik = useFormik({
         initialValues: {
-            email: email,
-            username: username,
-            profilePicture: null,
+            username: userPreferences.username,
+            email: userPreferences.email,
+            avatar: userPreferences.avatar,
         },
         validationSchema: EditProfileSchema,
+        enableReinitialize: true,
         onSubmit: (values) => {
-            console.log('Updated Profile:', values);
-            // API call goes here
+            // Update Redux store
+            dispatch(updateProfile(values));
+
+            // Update preview if avatar changed
+            if (values.avatar) {
+                const previewURL = URL.createObjectURL(values.avatar);
+                setPreview(previewURL);
+
+                setopenEditProfileDialog(false); // close dialog
+            }
         },
     });
     const addMovieFormik = useFormik({
@@ -71,7 +91,7 @@ function UserPreferences() {
     const handleFileChange = (event) => {
         const file = event.currentTarget.files[0];
         if (file) {
-            editProfileFormik.setFieldValue("profilePicture", file);
+            editProfileFormik.setFieldValue("avatar", file);
             const previewURL = URL.createObjectURL(file);
             setPreview(previewURL);
         }
@@ -81,9 +101,9 @@ function UserPreferences() {
         <>
 
             {/* heading */}
-            <div className='px-[20px]'>
+            {/* <div className='px-[20px]'>
                 <Heading level='pageheading' className="font-[700] text-dark font-roboto">User Preferences</Heading>
-            </div>
+            </div> */}
             {/* section */}
             <div className='flex flex-col gap-10  max-w-full px-10'>
                 {/* Profile section */}
@@ -92,16 +112,19 @@ function UserPreferences() {
                     {/* Avatar and Name */}
                     <div className='flex items-center gap-4'>
                         {/* Avtar */}
-                        <div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18'>
-                            <Image
-                                src={avatarUrl}
+                        {preview && preview !== "" ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18'>
+                            <img
+                                src={preview}
                                 alt="user avatar"
                                 className="object-cover w-full h-full rounded-[4px]"
                             />
-                        </div>
+                        </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-red-100'>
+                            <User className="w-5 h-5 text-gray-400" />
+                        </div>)}
+                        
                         <div>
-                            <Heading level="medium" className="font-[700] text-dark">{username}</Heading>
-                            <Paragraph size='medium' className="font-[500] text-light">{email}</Paragraph>
+                            <Heading level="medium" className="font-[700] text-dark">{userPreferences.username}</Heading>
+                            <Paragraph size='medium' className="font-[500] text-light">{userPreferences.email}</Paragraph>
                         </div>
 
                     </div>
@@ -120,14 +143,14 @@ function UserPreferences() {
                 <div className='flex flex-col gap-[20px] mb-[100px]'>
                     {/* themeSetting */}
                     <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
-                        <div className="relative inline">
+                        <div>
                             <Heading
                                 className="text-dark font-[600] font-roboto relative pb-2"
                                 level="sectionheading"
                             >
                                 Theme Setting
                             </Heading>
-                            <span className="absolute left-0 bottom-0 w-full h-[1px] bg-primary rounded"></span>
+                            <div className="w-full h-[1px] bg-primary rounded"></div>
                         </div>
 
                         <div className='flex flex-col gap-[20px] md:gap-[10px]'>
@@ -182,14 +205,14 @@ function UserPreferences() {
                     </div>
                     {/* Favorite items list */}
                     <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
-                        <div className="relative inline">
+                        <div className="">
                             <Heading
                                 className="text-dark font-[600] font-roboto relative pb-2"
                                 level="sectionheading"
                             >
                                 Favorite items
                             </Heading>
-                            <span className="absolute left-0 bottom-0 w-full h-[1px] bg-primary rounded"></span>
+                            <div className="w-full h-[1px] bg-primary rounded"></div>
                         </div>
 
                         <div className='flex flex-col gap-[20px] md:gap-[10px]'>
@@ -199,16 +222,16 @@ function UserPreferences() {
                                     <Heading level='medium' className="text-dark font-[700]">Movies</Heading>
                                     <Paragraph size='sm' className="">
                                         <span className='font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>KingsMan</span>
-                                        </Paragraph>
+                                    </Paragraph>
                                 </div>
                                 <div className='flex gap-2'>
                                     <Button className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
-                                        <Paragraph size="btntext" className="font-[700]">
+                                        <Paragraph size="btntext">
                                             Delete
                                         </Paragraph>
                                     </Button>
-                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1 " variant="ghost" onClick={()=> (setopenAddMovieDialog(true))}>
-                                        <Paragraph size="btntext" className="font-[700]">
+                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1 " variant="ghost" onClick={() => (setopenAddMovieDialog(true))}>
+                                        <Paragraph size="btntext">
                                             + Add
                                         </Paragraph>
                                     </Button>
@@ -221,7 +244,7 @@ function UserPreferences() {
                                     <Heading level='medium' className="text-dark font-[700]">Books</Heading>
                                     <Paragraph size='sm'>
                                         <span className='font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>War And Peace</span>
-                                       </Paragraph>
+                                    </Paragraph>
                                 </div>
                                 <div className='flex gap-2'>
                                     <Button className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
@@ -229,7 +252,7 @@ function UserPreferences() {
                                             Delete
                                         </Paragraph>
                                     </Button>
-                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1 " variant="ghost" onClick={()=> (setopenAddBookDialog(true))}>
+                                    <Button className="hover:bg-primary/10 text-primary hover:text-primary px-1 " variant="ghost" onClick={() => (setopenAddBookDialog(true))}>
                                         <Paragraph size="btntext" className="font-[700]">
                                             + Add
                                         </Paragraph>
@@ -258,7 +281,7 @@ function UserPreferences() {
                                     <Heading level='normal' className="text-dark font-[700]">Clear Local Storage</Heading>
                                     <Paragraph size='normal' className="font-[500] text-light">Permanently remove all saved preferences, products, and blogs from local storage. This action cannot be undone.</Paragraph>
                                 </div>
-                                <Button className="" variant="destructive">
+                                <Button className="" variant="destructive" onClick={() => (setopenConfirmResetDialog(true))}>
                                     <Paragraph size="btntext" className="font-[700]">
                                         Reset All Data
                                     </Paragraph>
@@ -272,11 +295,9 @@ function UserPreferences() {
                 </div>
             </div>
 
-
-
             {/* Edit Profile*/}
             <Dialog open={openEditProfileDialog} onOpenChange={setopenEditProfileDialog}>
-                <DialogContent className='xs:w-[400px] sm:w-[440px] md:w-[480px] lg:w-[490px] xl:w-[500px] 2xl:w-[540px] '>
+                <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-start">Update Profile Information</DialogTitle>
                         <DialogDescription>Modify your profile picture, email, and username details below.</DialogDescription>
@@ -369,10 +390,9 @@ function UserPreferences() {
                 </DialogContent>
             </Dialog>
 
-
             {/*Add movie*/}
             <Dialog open={openAddMovieDialog} onOpenChange={setopenAddMovieDialog}>
-                <DialogContent className='xs:w-[400px] sm:w-[440px] md:w-[480px] lg:w-[490px] xl:w-[500px] 2xl:w-[540px] '>
+                <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-start">Add a New Movie</DialogTitle>
                         <DialogDescription>Enter the movie name below to add it to your favorites list.</DialogDescription>
@@ -413,7 +433,7 @@ function UserPreferences() {
 
             {/*Add book*/}
             <Dialog open={openAddBookDialog} onOpenChange={setopenAddBookDialog}>
-                <DialogContent className='xs:w-[400px] sm:w-[440px] md:w-[480px] lg:w-[490px] xl:w-[500px] 2xl:w-[540px] '>
+                <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-start">Add a New Book</DialogTitle>
                         <DialogDescription>Enter the book name below to add it to your favorites list.</DialogDescription>
@@ -451,8 +471,39 @@ function UserPreferences() {
                     </form>
                 </DialogContent>
             </Dialog>
+
+            {/* Are you sure you want to reset? */}
+            <Dialog open={openConfirmResetDialog} onOpenChange={setopenConfirmResetDialog}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle className='text-start'>Confirm Data Reset</DialogTitle>
+                        <DialogDescription className='font-urbanist text-start text-[12px] md:text-[13px] lg:text-[14px] xl:text-[14px] 2xl:text-[16px]'>
+                            This action will permanently clear all saved preferences, products, and blogs from local storage. This cannot be undone.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className='w-full'>
+                        <div className='w-full'>
+                            <Button
+                                variant='destructive'
+                                className='w-full'
+                                onClick={() => setopenConfirmResetDialog(false)}
+                            >
+                                <Paragraph size="btntext">Take Me Back</Paragraph>
+                            </Button>
+                        </div>
+                        <div className='w-full'>
+                            <Button
+                                className='w-full'
+                            >
+                                <Paragraph size="btntext">Yes, Reset</Paragraph>
+                            </Button>
+                        </div>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </>
     )
+
 }
 
 export default UserPreferences

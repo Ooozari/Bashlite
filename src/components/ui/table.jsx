@@ -12,7 +12,7 @@ function Table({
     <div data-slot="table-container" className="relative w-full overflow-x-auto">
       <table
         data-slot="table"
-        className={cn("w-full caption-bottom text-sm", className)}
+        className={cn("table-fixed min-w-full caption-bottom text-sm", className)}
         {...props} />
     </div>
   );
@@ -49,7 +49,7 @@ function TableFooter({
   return (
     <tfoot
       data-slot="table-footer"
-      className={cn("bg-muted/50 border-t font-medium [&>tr]:last:border-b-0", className)}
+      className={cn("bg-primary/50 border-t font-medium [&>tr]:last:border-b-0", className)}
       {...props} />
   );
 }
@@ -62,7 +62,7 @@ function TableRow({
     <tr
       data-slot="table-row"
       className={cn(
-        "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
+        "data-[state=selected]:bg-muted border-b transition-colors",
         className
       )}
       {...props} />
@@ -77,7 +77,7 @@ function TableHead({
     <th
       data-slot="table-head"
       className={cn(
-        "text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "bg-primary-page-bg text-normal h-10 font-roboto px-4 text-left align-middle font-[800] whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props} />
@@ -92,7 +92,7 @@ function TableCell({
     <td
       data-slot="table-cell"
       className={cn(
-        "p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "py-2 px-4 text-normal align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props} />

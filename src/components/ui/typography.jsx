@@ -9,6 +9,8 @@ const headingVariants = cva(
         variants: {
             level: {
                 h1: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-[64px]",
+                h3: "text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[48px]",
+                h4: "text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px] xl:text-[28px] 2xl:text-[30px]",
                 normal: "text-[14px] md:text-[16px]",
                 medium: "text-[16px] md:text-[18px]",
                 pageheading: "text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] xl:text-[32px] 2xl:text-[36px] leading-[1.2]",
@@ -46,7 +48,8 @@ const paragraphVariants = cva("", {
             normal: "text-[12px] md:text-[14px]",
             label: "text-[12px] md:text-[14px] font-[700]",
             btntext: "text-[14px] md:text-[16px] font-[500]",
-             sm: "text-[12px]",
+            minibtntext: "text-[12px] md:text-[12px] font-[800]",
+            sm: "text-[12px]",
 
         },
     },

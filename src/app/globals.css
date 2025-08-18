@@ -18,6 +18,13 @@
   --color-primary-border: var(--primary-border);
   --color-primary-page-bg: var(--primary-page-bg);
   --color-primary-card-bg: var(--primary-card-bg);
+  
+/* Mapped shadow variables */
+  --shadow-light-color: var(--shadow-light);
+  --shadow-medium-color: var(--shadow-medium);
+  --shadow-heavy-color: var(--shadow-heavy);
+
+
 
   /* Base */
   --color-white: var(--white);
@@ -91,6 +98,11 @@
   --primary-page-bg: #f5f3ff;
   --primary-card-bg: #faf9ff;
 
+    /* Shadow colors */
+  --shadow-light: rgba(129, 107, 255, 0.1);   /* very soft, subtle shadow */
+  --shadow-medium: rgba(129, 107, 255, 0.2);  /* medium shadow */
+  --shadow-heavy: rgba(129, 107, 255, 0.3);   /* more prominent shadow */
+
   /* Base */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -144,6 +156,11 @@
   --primary-border: #6650cc;
   --primary-page-bg: #1a1a26;
   --primary-card-bg: #222233;
+
+   /* Shadow colors */
+  --shadow-light: rgba(129, 107, 255, 0.2);
+  --shadow-medium: rgba(129, 107, 255, 0.3);
+  --shadow-heavy: rgba(129, 107, 255, 0.5);
 
   /* Base */
   --background: #1c1b22;

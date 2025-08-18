@@ -1,37 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadFromLocalStorage } from "@/libs/storage";
 
-// if there is already data in local storage.
-const storePreferences = JSON.parse(localStorage.getItem("userPreferences"))
 
-// initial sate of the store (the || operator take first truly value)
-const initialState = storePreferences || {
-    //profile seciton
-    username: 'Uzair Asif',
-    email: 'abc@gmail.com',
+const defaultState =  {
+    username: "Uzair Asif",
+    email: "abc@gmail.com",
     avatar: null,
-
-    // theme secontion
-    theme: 'light',
+    theme: "light",
     colorTheme: {
         primary: "#816bff",
-        secodary: "#323f9e",
-        textColor: {
-            heading: " #364A63",
-            normal: "#283C55",
-            light: "#8094AE",
-            dark: "#526484",
+        primaryVariants: {
+            border: "#b7a6ff",
+            pageBg: "#f5f3ff",
+            cardBg: "#faf9ff",
         },
     },
-
-    // favorites section
     favorites: {
         movies: ["Redemption"],
         books: ["The Catche"],
     },
-
-    // sessionHistory section
     sessionHistory: [],
-}
+};
+// ✅ hydrate directly from localStorage at startup
+const initialState = loadFromLocalStorage("userPreferences", defaultState);
+
 
 // SLices
 
@@ -44,15 +36,15 @@ export const userPreferencesSlice = createSlice({
             state.username = action.payload.username || state.username
             state.email = action.payload.email || state.email
             state.avatar = action.payload.avatar || state.avatar
-            localStorage.setItem('userPreferences', JSON.stringify(state));
+
         },
         updateTheme: (state, action) => {
             state.theme = action.payload.theme
-            localStorage.setItem('userPreferences', JSON.stringify(state));
+
         },
         updateColorTheme: (state, action) => {
             state.theme = action.payload.theme
-            localStorage.setItem('userPreferences', JSON.stringify(state));
+
         },
 
         // Favorites 
@@ -63,22 +55,31 @@ export const userPreferencesSlice = createSlice({
             } else {
                 state.favorites[category].push(item)
             }
-            localStorage.setItem('userPreferences', JSON.stringify(state));
+
         },
         removeFavorites: (state, action) => {
             const { category, item } = action.payload;
             if (state.favorites[category]) {
-                state.favorites[category].push(item) = state.favorites[category].filter(
-                    (fav) => ( fav !== item)
-                )
-            } 
-            localStorage.setItem('userPreferences', JSON.stringify(state));
+                state.favorites[category] = state.favorites[category].filter(fav => fav !== item)
+
+            }
         },
-        
+
         setSessionHistory: (state, action) => {
             state.theme = action.payload.theme
-            localStorage.setItem('userPreferences', JSON.stringify(state));
         }
 
     }
 })
+
+export const {
+    updateProfile,
+    updateTheme,
+    updateColorTheme,
+    addFavorite,
+    removeFavorite,
+    setSessionHistory,
+    resetPreferences
+} = userPreferencesSlice.actions;
+
+export default userPreferencesSlice.reducer;

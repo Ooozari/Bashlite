@@ -1,0 +1,24 @@
+import React from 'react'
+import { Button } from "@/components/ui/button"
+import { Heading, Paragraph } from '@/components/ui/typography'
+
+function BlogCard({ title, content, author, date }) {
+    return (
+
+        <div className='flex flex-col border rounded-[6px] px-4 pt-[17px] pb-[14px] shadow-[0_4px_6px_var(--shadow-medium-color)]  hover:shadow-[0_4px_6px_var(--shadow-heavy-color)] transition max-w-[384px] cursor-pointer'>
+            {/* Date and Author */}
+            <Paragraph size='normal' className='flex justify-between items-center text-sm font-medium text-light mb-2'>
+                <span>{date}</span>
+                <span>By {author}</span>
+            </Paragraph>
+
+            {/* Blog Title */}
+            <Heading level='h4' className='text-normal font-semibold font-roboto mb-2'>{title}</Heading>
+
+            {/* Blog Excerpt */}
+            <Paragraph size='normal' className='text-light line-clamp-3'>{content}</Paragraph>
+        </div>
+    )
+}
+
+export default BlogCard
