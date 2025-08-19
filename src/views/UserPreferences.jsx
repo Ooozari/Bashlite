@@ -10,7 +10,8 @@ import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
 import { User, Pencil, X } from 'lucide-react';
 import avatarUrl from "@/assets/pic.jpg"
-import { addFavorites, removeFavorites,removeAllFavorites } from "@/features/userPreferencesSlice"
+import { addFavorites, removeFavorites, removeAllFavorites, resetAllPreferences, updateTheme } from "@/features/userPreferencesSlice"
+import { toast } from "sonner"
 import {
     Dialog,
     DialogContent,
@@ -34,13 +35,12 @@ import { updateProfile, } from "@/features/userPreferencesSlice";
 function UserPreferences() {
     const dispatch = useDispatch();
     const userPreferences = useSelector((state) => state.userPreferences);
-    console.log("userPreferences", userPreferences);
     const [preview, setPreview] = useState(userPreferences.avatar)
     const [openEditProfileDialog, setopenEditProfileDialog] = useState(false);
     const [openAddMovieDialog, setopenAddMovieDialog] = useState(false);
     const [openAddBookDialog, setopenAddBookDialog] = useState(false);
     const [openConfirmResetDialog, setopenConfirmResetDialog] = useState(false);
-
+    const theme = useSelector((state) => state.userPreferences.theme);
 
     const editProfileFormik = useFormik({
         initialValues: {
@@ -50,7 +50,7 @@ function UserPreferences() {
         },
         validationSchema: EditProfileSchema,
         enableReinitialize: true,
-        onSubmit: (values) => {
+        onSubmit: (values, { resetForm }) => {
             const avatarUrl = values.avatar instanceof File
                 ? URL.createObjectURL(values.avatar)
                 : values.avatar;
@@ -59,6 +59,7 @@ function UserPreferences() {
                 email: values.email,
                 avatar: values.avatar
             }));
+            resetForm();
             setopenEditProfileDialog(false);
         },
 
@@ -87,7 +88,7 @@ function UserPreferences() {
             book: "",
         },
         validationSchema: AddBookSchema,
-        onSubmit: (values,{ resetForm }) => {
+        onSubmit: (values, { resetForm }) => {
             dispatch(
                 addFavorites({
                     category: "books",
@@ -96,6 +97,7 @@ function UserPreferences() {
             );
             resetForm();
             setopenAddBookDialog(false)
+            toast.error(`Failed to add "${values.book}" to your favorites.`);
         },
     });
     const books = useSelector((state) => state.userPreferences.favorites.books);
@@ -113,6 +115,7 @@ function UserPreferences() {
         }
     };
 
+    console.log("User preferences :", userPreferences)
     return (
         <>
 
@@ -134,8 +137,11 @@ function UserPreferences() {
                                 alt="user avatar"
                                 className="object-cover w-full h-full rounded-[4px]"
                             />
-                        </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-red-100'>
-                            <User className="w-5 h-5 text-gray-400" />
+                        </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-foreground/50 flex justify-center items-end'>
+                            <div className="flex justify-center items-end w-full h-full">
+                                <User className="w-full h-full text-white" />
+                            </div>
+
                         </div>)}
 
                         <div>
@@ -176,7 +182,10 @@ function UserPreferences() {
                                     <Paragraph size='normal' className="font-[500] text-light" >Choose between Light, Dark, or System default appearance.</Paragraph>
                                 </div>
 
-                                <Select>
+                                <Select
+                                    value={theme}
+                                    onValueChange={(value) => dispatch(updateTheme(value))}
+                                >
                                     <SelectTrigger className="w-full md:w-[180px]">
                                         <SelectValue placeholder="Select theme" />
                                     </SelectTrigger>
@@ -186,6 +195,7 @@ function UserPreferences() {
                                         <SelectItem value="system">System</SelectItem>
                                     </SelectContent>
                                 </Select>
+
                             </div>
                             <div className='flex flex-col md:flex-row gap-2 justify-between md:items-center'>
                                 <div className='flex flex-col'>
@@ -257,9 +267,9 @@ function UserPreferences() {
                                     </Paragraph>
                                 </div>
                                 <div className='flex gap-2'>
-                                    <Button 
-                                    onClick={()=> (dispatch(removeAllFavorites({ category: "movies",})))}
-                                     className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
+                                    <Button
+                                        onClick={() => (dispatch(removeAllFavorites({ category: "movies", })))}
+                                        className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
                                         <Paragraph size="btntext" className='font-bold'>
                                             Delete
                                         </Paragraph>
@@ -297,9 +307,9 @@ function UserPreferences() {
                                     </Paragraph>
                                 </div>
                                 <div className='flex gap-2'>
-                                    <Button 
-                                    onClick={()=> (dispatch(removeAllFavorites({ category: "books",})))}
-                                    className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
+                                    <Button
+                                        onClick={() => (dispatch(removeAllFavorites({ category: "books", })))}
+                                        className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
                                         <Paragraph size="btntext" className="font-[700]">
                                             Delete
                                         </Paragraph>
@@ -338,9 +348,7 @@ function UserPreferences() {
                                         Reset All Data
                                     </Paragraph>
                                 </Button>
-
                             </div>
-
                         </div>
 
                     </div>
@@ -535,7 +543,7 @@ function UserPreferences() {
                     <DialogFooter className='w-full'>
                         <div className='w-full'>
                             <Button
-                                variant='destructive'
+
                                 className='w-full'
                                 onClick={() => setopenConfirmResetDialog(false)}
                             >
@@ -544,6 +552,12 @@ function UserPreferences() {
                         </div>
                         <div className='w-full'>
                             <Button
+                                onClick={() => {
+                                    dispatch(resetAllPreferences())
+                                    setopenConfirmResetDialog(false)
+                                    toast.success("All data has been reset")
+                                }}
+                                variant='destructive'
                                 className='w-full'
                             >
                                 <Paragraph size="btntext">Yes, Reset</Paragraph>

@@ -8,16 +8,25 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ErrorMessage } from '@/components/shared'
+import { useDispatch } from 'react-redux';
+import { addBlog } from '@/features/blogsSlice';
 
 function WriteBlog() {
+    const dispatch = useDispatch();
     const addBlogFormik = useFormik({
         initialValues: {
+            author: '',
             title: '',
             content: '',
         },
         validationSchema: AddBlogSchema,
-        onSubmit: (values) => {
-
+        onSubmit: (values, {resetForm}) => {
+            dispatch(addBlog({
+                title: values.title,
+                content: values.content,
+                author: values.author,
+            }))
+            resetForm();
         },
     });
     return (
@@ -36,6 +45,29 @@ function WriteBlog() {
                             onSubmit={addBlogFormik.handleSubmit}
                             className="grid gap-6"
                         >
+                            <div className="flex flex-col gap-2 w-full">
+                                <Label htmlFor="author">
+                                    <Paragraph size="label">Author name</Paragraph>
+                                </Label>
+
+                                <div className="relative">
+                                    <Input
+                                        id="author"
+                                        name="author"
+                                        placeholder="Enter author name"
+                                        value={addBlogFormik.values.author}
+                                        onChange={addBlogFormik.handleChange}
+                                        onBlur={addBlogFormik.handleBlur}
+                                        className="w-full"
+                                    />
+                                    {addBlogFormik.touched.author && addBlogFormik.errors.author && (
+                                        <ErrorMessage
+                                            error={addBlogFormik.errors.author}
+                                            touched={addBlogFormik.touched.author}
+                                        />
+                                    )}
+                                </div>
+                            </div>
                             <div className="flex flex-col gap-2 w-full">
                                 <Label htmlFor="title">
                                     <Paragraph size="label">Blog title</Paragraph>

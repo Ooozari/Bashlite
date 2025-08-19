@@ -4,8 +4,9 @@ import { Heading, Paragraph } from '@/components/ui/typography'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {WriteBlog,BlogTable, DisplayBlogs} from '@/components/shared';
 
-function Blogs() {
 
+
+function Blogs() {
     return (
         <>
             <div>

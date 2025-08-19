@@ -3,8 +3,8 @@ import { loadFromLocalStorage } from "@/libs/storage";
 
 
 const defaultState = {
-    username: "Uzair Asif",
-    email: "abc@gmail.com",
+    username: "Guest User",
+    email: "guest123@gmail.com",
     avatar: null,
     theme: "light",
     colorTheme: {
@@ -39,8 +39,7 @@ export const userPreferencesSlice = createSlice({
 
         },
         updateTheme: (state, action) => {
-            state.theme = action.payload.theme
-
+            state.theme = action.payload
         },
         // updateColorTheme: (state, action) => {
         //     state.theme = action.payload.theme
@@ -70,9 +69,10 @@ export const userPreferencesSlice = createSlice({
         },
 
 
-        // setSessionHistory: (state, action) => {
-        //     state.theme = action.payload.theme
-        // },
+        setSessionHistory: (state, action) => {
+            state.theme = action.payload
+        },
+        resetAllPreferences: () => defaultState,
 
     }
 })
@@ -84,8 +84,7 @@ export const {
     addFavorites,
     removeFavorites,
     removeAllFavorites,
-    // setSessionHistory,
-    // resetPreferences
+    resetAllPreferences,
 } = userPreferencesSlice.actions;
 
 export default userPreferencesSlice.reducer;

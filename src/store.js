@@ -4,15 +4,17 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import { combineReducers } from "redux";
 import userPreferencesReducer from "@/features/userPreferencesSlice";
+import blogsReducer from "@/features/blogsSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userPreferences"], // only persist this slice
+  whitelist: ["userPreferences","userBlogs"], // only persist this slice
 };
 
 const rootReducer = combineReducers({
   userPreferences: userPreferencesReducer,
+  userBlogs: blogsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -22,7 +24,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], // 👈 ignore persist actions
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
 });

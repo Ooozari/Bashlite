@@ -83,4 +83,7 @@ export const AddBlogSchema = Yup.object({
     .required('Title is required'),
   content: Yup.string()
     .required('Content is required'),
+  author: Yup.string()
+    .required('Author name is required'),
+
 });
