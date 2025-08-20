@@ -5,16 +5,18 @@ import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import { combineReducers } from "redux";
 import userPreferencesReducer from "@/features/userPreferencesSlice";
 import blogsReducer from "@/features/blogsSlice";
+import productsReducer from "@/features/productsSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userPreferences","userBlogs"], // only persist this slice
+  whitelist: ["userPreferences","userBlogs", "userProducts"],
 };
 
 const rootReducer = combineReducers({
   userPreferences: userPreferencesReducer,
   userBlogs: blogsReducer,
+  userProducts: productsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

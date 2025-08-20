@@ -11,6 +11,7 @@ const headingVariants = cva(
                 h1: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-[64px]",
                 h3: "text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[48px]",
                 h4: "text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px] xl:text-[28px] 2xl:text-[30px]",
+                h5: "text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px] 2xl:text-[18px]",
                 normal: "text-[14px] md:text-[16px]",
                 medium: "text-[16px] md:text-[18px]",
                 pageheading: "text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] xl:text-[32px] 2xl:text-[36px] leading-[1.2]",
@@ -44,6 +45,7 @@ export function Heading({ className, level = "h1", children }) {
 const paragraphVariants = cva("", {
     variants: {
         size: {
+            xxl: "text-[18px] md:text-[20px] xl:text-[22px]",
             xl: "text-[14px] md:text-[16px] xl:text-[18px]",
             large: "text-[14px] md:text-[16px]",
             normal: "text-[12px] md:text-[14px]",

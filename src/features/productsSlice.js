@@ -50,6 +50,6 @@ export const {
     addProduct,
     updateProduct,
     deleteProduct,
-} = blogsSlice.actions;
+} = ProductsSlice.actions;
 
-export default blogsSlice.reducer;
+export default ProductsSlice.reducer;

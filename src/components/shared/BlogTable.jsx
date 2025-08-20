@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import {
     Table,
@@ -69,7 +70,7 @@ function BlogTable() {
                         ))
                     ) : (<TableRow>
                         <TableCell colSpan={5} className="text-center">
-                            <Paragraph size='xl' className="text-light font-[500]">No data to display</Paragraph>
+                            <Paragraph size='xxl' className="text-extraLight">No data to display</Paragraph>
 
                         </TableCell>
                     </TableRow>)}

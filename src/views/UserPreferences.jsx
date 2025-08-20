@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label"
 import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
 import { User, Pencil, X } from 'lucide-react';
-import avatarUrl from "@/assets/pic.jpg"
 import { addFavorites, removeFavorites, removeAllFavorites, resetAllPreferences, updateTheme } from "@/features/userPreferencesSlice"
 import { toast } from "sonner"
 import {
@@ -31,6 +30,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { updateProfile, } from "@/features/userPreferencesSlice";
+import { fileToBase64 } from '@/utils/fileHelpers';
 
 function UserPreferences() {
     const dispatch = useDispatch();
@@ -102,18 +102,14 @@ function UserPreferences() {
     });
     const books = useSelector((state) => state.userPreferences.favorites.books);
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         const file = event.currentTarget.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                // store base64 string inside formik
-                editProfileFormik.setFieldValue("avatar", reader.result);
-                setPreview(reader.result); // for preview
-            };
-            reader.readAsDataURL(file); // convert to base64
+            const base64 = await fileToBase64(file);
+            editProfileFormik.setFieldValue("avatar", base64);
         }
     };
+
 
     return (
         <>
@@ -129,19 +125,23 @@ function UserPreferences() {
 
                     {/* Avatar and Name */}
                     <div className='flex items-center gap-4'>
-                        {/* Avtar */}
-                        {preview && preview !== "" ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18'>
-                            <img
-                                src={userPreferences.avatar}
-                                alt="user avatar"
-                                className="object-cover w-full h-full rounded-[4px]"
-                            />
-                        </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-foreground/50 flex justify-center items-end'>
-                            <div className="flex justify-center items-end w-full h-full">
-                                <User className="w-full h-full text-white" />
-                            </div>
+                        {/* Avatar */}
+                        <div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative'>
+                            {userPreferences.avatar ? (
+                                <Image
+                                    src={userPreferences.avatar}
+                                    alt="user avatar"
+                                    fill
+                                    className="object-cover w-full h-full rounded-[4px]"
+                                    onError={(e) => { e.currentTarget.src = ""; }} // fallback if broken
+                                />
+                            ) : (
+                                <div className='w-full h-full bg-foreground/50 flex justify-center items-center rounded-[4px]'>
+                                    <User className="w-8 h-8 text-white" />
+                                </div>
+                            )}
+                        </div>
 
-                        </div>)}
 
                         <div>
                             <Heading level="medium" className="font-[700] text-dark">{userPreferences.username}</Heading>
@@ -366,15 +366,16 @@ function UserPreferences() {
                         className="grid gap-6"
                     >
                         <div className='flex gap-6 items-center'>
-                            {/* Profile Picture Field */}
-                            <div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative'>
+                            {editProfileFormik.values.avatar ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative'>
                                 <Image
-                                    src={editProfileFormik.values.avatar || avatarUrl}
+                                    src={editProfileFormik.values.avatar}
                                     alt="user avatar"
                                     fill
                                     className="object-cover w-full h-full rounded-[4px]"
                                 />
-                            </div>
+                            </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-accent flex items-center justify-center rounded-[4px]'>
+                                <User className='w-8 h-8 text-light' />
+                            </div>)}
                             <div className="flex flex-col gap-2 w-full">
                                 <Label htmlFor="avatar">
                                     <Paragraph size="label">Profile Picture</Paragraph>

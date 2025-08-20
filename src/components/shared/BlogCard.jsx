@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import { Heading, Paragraph } from '@/components/ui/typography'
 import { useRouter } from 'next/navigation';

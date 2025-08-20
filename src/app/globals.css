@@ -12,6 +12,7 @@
   --color-normal: var(--text-normal);
   --color-light: var(--text-light);
   --color-dark: var(--text-dark);
+  --color-extraLight: var(--text-extra-light);
 
   /* Primary */
   --color-primary: var(--primary);
@@ -91,6 +92,7 @@
   --text-normal: #333333;
   --text-light: #666666;
   --text-dark: #1A1A1A;
+  --text-extra-light: #BBBBBB;
 
   /* Primary */
   --primary: #816bff;
@@ -170,6 +172,7 @@
   --text-dark: #ffffff;
   --text-normal: #e5e5e5;
   --text-light: #a3a3a3;
+  --text-extra-light: #777777;
 
   /* Components */
   --card: oklch(0.205 0 0);
