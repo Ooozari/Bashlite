@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { ErrorMessage } from '@/components/shared'
 import { useDispatch } from 'react-redux';
 import { addBlog } from '@/features/blogsSlice';
+import { toast } from 'sonner';
 
 function WriteBlog() {
     const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function WriteBlog() {
                 author: values.author,
             }))
             resetForm();
+            toast.success("Blog added successfull")
         },
     });
     return (

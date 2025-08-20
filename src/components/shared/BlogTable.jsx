@@ -14,7 +14,10 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { deleteBlog } from '@/features/blogsSlice';
 import { Heading, Paragraph } from '@/components/ui/typography'
+import { useRouter } from 'next/navigation';
+
 function BlogTable() {
+    const router = useRouter()
     const dispatch = useDispatch()
     const blogs = useSelector((state) => state.userBlogs.blogs);
     return (
@@ -49,13 +52,15 @@ function BlogTable() {
                                     }
                                 </TableCell>
                                 <TableCell className="text-right sticky right-0 z-20">
-                                    <div className="inline-flex gap-2 bg-white p-1 justify-end">
+                                    <div className="inline-flex gap-2 bg-white dark:bg-card p-1 justify-end">
                                         <Button
                                             onClick={() => dispatch(deleteBlog(blog.id))}
                                             variant="ghost" className="bg-destructive/20 hover:bg-destructive/10 text-destructive hover:text-destructive h-7 px-1">
                                             <Trash />
                                         </Button>
-                                        <Button variant="ghost" className="bg-primary/20 hover:bg-primary/10 text-primary hover:text-primary px-1 h-7">
+                                        <Button
+                                            onClick={() => router.push(`/edit-blog/${blog.id}`)}
+                                            variant="ghost" className="bg-primary/20 hover:bg-primary/10 text-primary hover:text-primary px-1 h-7">
                                             <Pencil />
                                         </Button>
                                     </div>
@@ -65,13 +70,9 @@ function BlogTable() {
                     ) : (<TableRow>
                         <TableCell colSpan={5} className="text-center">
                             <Paragraph size='xl' className="text-light font-[500]">No data to display</Paragraph>
-                            
+
                         </TableCell>
                     </TableRow>)}
-
-
-
-
                 </TableBody>
             </Table>
         </>

@@ -1,9 +1,11 @@
 import { Blog } from '@/views'
 import React from 'react'
 
-function Page() {
+function Page({ params }) {
+    const {id} =  params ;
     return (
-        <Blog />
+
+        <Blog blogId={id} />
     )
 }
 

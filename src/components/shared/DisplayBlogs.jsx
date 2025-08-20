@@ -11,7 +11,9 @@ function DisplayBlogs() {
             <div className='grid gap-3 grid-cols-[repeat(auto-fit,minmax(340px,1fr))]'>
                 {blogs.length > 0 ? (blogs.map(blog => (
                     <BlogCard
+
                         key={blog.id}
+                        id={blog.id}
                         title={blog.title}
                         content={blog.excerpt}
                         author={blog.author}

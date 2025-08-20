@@ -115,7 +115,6 @@ function UserPreferences() {
         }
     };
 
-    console.log("User preferences :", userPreferences)
     return (
         <>
 
