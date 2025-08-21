@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Heading, Paragraph } from '@/components/ui/typography';
 import Image from 'next/image';
 import { User } from 'lucide-react';
-import {Dashboard,Dashboard2,Dashboard3} from '@/svg/Icon'
+import { Dashboard, Dashboard2, Dashboard3 } from '@/svg/Icon'
 
 function Home() {
   const userPreferences = useSelector((state) => state.userPreferences);
@@ -14,15 +14,25 @@ function Home() {
   return (
     <div className="min-h-screen transition-colors duration-300">
       {/* User Info */}
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-4 mb-6 justify-end">
+        {/* Username */}
+        <div>
+          <Heading level="medium" className="font-[500] text-dark">
+            {userPreferences.username}
+          </Heading>
+          <Heading level="medium" className="text-extraLight">
+            {userPreferences.email}
+          </Heading>
+        </div>
+
         {/* Avatar */}
-        <div className='w-[50px] h-[50px] relative rounded-[4px] overflow-hidden'>
+        <div className='w-[40px] h-[40px] sm:w-[42px] sm:h-[42px] md:w-[44px] md:h-[44px] lg:w-[46px] lg:h-[46px] xl:w-[48px] xl:h-[48px] 2xl:w-[50px] 2xl:h-[50px] relative  '>
           {userPreferences.avatar ? (
             <Image
               src={userPreferences.avatar}
               alt="user avatar"
               fill
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full rounded-[4px]"
               onError={(e) => { e.currentTarget.src = ""; }}
             />
           ) : (
@@ -31,18 +41,11 @@ function Home() {
             </div>
           )}
         </div>
-        {/* Username */}
-        <Heading level="medium" className="font-[700] text-dark">
-          {userPreferences.username || "User"}
-        </Heading>
       </div>
 
       {/* Dashboard Title */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[var(--color-heading)] mb-2">
-         <Dashboard className="w-15 h-15 text-primary"/>
-         <Dashboard2 className="w-15 h-15 text-primary"/>
-         <Dashboard3 className="w-15 h-15 text-primary"/>
           Dashlite Overview
         </h1>
         <Paragraph size="medium" className="text-[var(--color-text)]">
