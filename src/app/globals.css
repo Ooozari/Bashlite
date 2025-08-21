@@ -52,6 +52,8 @@
   --color-positive: var(--positive);
 
   /* Utility colors */
+  
+  --color-primary-foreground: var(--primary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -97,8 +99,9 @@
   /* Primary */
   --primary: #816bff;
   --primary-border: #b7a6ff;
-  --primary-page-bg: #f5f3ff;
-  --primary-card-bg: #faf9ff;
+--primary-page-bg: #fbfaff;  /* Much lighter than #f5f3ff */
+--primary-card-bg: #fdfcff;  /* Almost white but keeps a subtle tint */
+
 
     /* Shadow colors */
   --shadow-light: rgba(129, 107, 255, 0.1);   /* very soft, subtle shadow */
@@ -156,8 +159,8 @@
   /* Primary */
   --primary: #816bff;
   --primary-border: #6650cc;
-  --primary-page-bg: #1a1a26;
-  --primary-card-bg: #222233;
+  --primary-page-bg: #12121a;  /* darker than #1a1a26 */
+  --primary-card-bg: #1a1a24;  /* darker than #222233 */
 
    /* Shadow colors */
   --shadow-light: rgba(129, 107, 255, 0.2);

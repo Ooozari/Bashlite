@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table"
 import { useFormik } from 'formik';
 import Image from 'next/image'
-import Ghee from '@/assets/Ghee.png'
+
 import { Button } from "@/components/ui/button"
 import { Heading, Paragraph } from '@/components/ui/typography'
 import {

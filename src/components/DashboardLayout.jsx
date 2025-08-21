@@ -1,0 +1,58 @@
+'use client';
+
+import React, { useState } from 'react';
+import Sidebar from '@/layout/Sidebar';
+import clsx from 'clsx';
+import { Menu } from 'lucide-react'; // Menu icon for mobile toggle
+
+export default function DashboardLayout({ children }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  return (
+    <div className="flex min-h-screen bg-primary-page-bg relative">
+      {/* Desktop Sidebar - Collapsed but Sticky */}
+      <div className="hidden lg:flex fixed left-0 top-0 h-full z-30">
+        <Sidebar isExpanded={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+      </div>
+
+      {/* Mobile Sidebar (Drawer) */}
+      <div
+        className={clsx(
+          "fixed left-0 top-0 h-full z-40 transition-transform duration-300 ease-in-out lg:hidden",
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <Sidebar isExpanded={true} onClose={() => setIsSidebarOpen(false)} />
+      </div>
+
+      {/* Dark Overlay */}
+      {isSidebarOpen && (
+        <div
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-black opacity-40 z-30 lg:hidden"
+        />
+      )}
+
+      {/* Main Content */}
+      <div
+        className={clsx(
+          "flex flex-col w-full transition-all duration-300",
+          !isSidebarOpen && "lg:pl-[60px]" // only push content on desktop
+        )}
+      >
+        {/* Top Bar with Mobile Menu Icon */}
+        <div className="lg:hidden sticky top-0 left-0 w-full bg-white shadow-sm z-20 flex items-center justify-between px-4 py-2">
+          <button onClick={() => setIsSidebarOpen(true)}>
+            <Menu size={24} className="text-gray-800" />
+          </button>
+          <h1 className="text-lg font-semibold">BashLite</h1>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="container px-[20px] sm:px-[22px] md:px-[24px] lg:px-[26px] xl:px-[28px] 2xl:px-[30px] overflow-y-auto mb-[100px]">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}

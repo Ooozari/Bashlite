@@ -119,7 +119,7 @@ function UserPreferences() {
                 <Heading level='pageheading' className="font-[700] text-dark font-roboto">User Preferences</Heading>
             </div> */}
             {/* section */}
-            <div className='flex flex-col gap-10  max-w-full px-10'>
+            <div className='flex flex-col gap-10  max-w-full'>
                 {/* Profile section */}
                 <div className='flex items-center justify-between'>
 
@@ -161,7 +161,7 @@ function UserPreferences() {
                     </div>
                 </div>
 
-                <div className='flex flex-col gap-[20px] mb-[100px]'>
+                <div className='flex flex-col gap-[20px]'>
                     {/* themeSetting */}
                     <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
                         <div>
