@@ -20,10 +20,10 @@ function Blog({ blogId }) {
 
     return (
         <>
-            <div className='md:w-[50%] w-full mx-auto my-[100px]'>
-                <div className='flex flex-col border rounded-[6px] px-4 pt-[17px] pb-[14px] shadow-[0_4px_6px_var(--shadow-medium-color)]  hover:shadow-[0_4px_6px_var(--shadow-heavy-color)] transition'>
+            <div className='md:w-[60%] w-full mx-auto my-[100px]'>
+                <div className='flex flex-col border rounded-[6px] px-4 pt-[17px] pb-[16px] shadow-[0_4px_6px_var(--shadow-medium-color)]  hover:shadow-[0_4px_6px_var(--shadow-heavy-color)] transition'>
                     {/* Date and Author */}
-                    <Paragraph size='normal' className='flex justify-between items-center text-sm font-medium text-light mb-2'>
+                    <Paragraph size='normal' className='flex justify-between items-center text-light mb-5 md:mb-[26px]'>
                         <span>{
                             new Date(blog.publishedDate).toLocaleString("en-US", {
                                 month: "short",
@@ -33,11 +33,11 @@ function Blog({ blogId }) {
                                 minute: "numeric",
                                 hour12: true
                             })}</span>
-                        <span>{blog.author}</span>
+                        <span className='text-normal font-[500]'>{blog.author}</span>
                     </Paragraph>
 
                     {/* Blog Title */}
-                    <Heading level='h3' className='text-normal font-semibold font-roboto mb-2'>{blog.title}</Heading>
+                    <Heading level='h3' className='text-normal font-semibold font-roboto mb-3 md:mb-[16px]'>{blog.title}</Heading>
 
                     {/* Blog content*/}
                     <Paragraph size='large' className='text-light'>{blog.content}</Paragraph>

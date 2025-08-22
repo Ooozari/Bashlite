@@ -10,8 +10,8 @@ const headingVariants = cva(
             level: {
                 cardh1: "text-[32px] sm:text-[38px] md:text-[44px] lg:text-[50px] xl:text-[56px] 2xl:text-[64px]",
                 h1: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-[64px]",
-                h3: "text-[32px] sm:text-[33px] md:text-[34px] lg:text-[36px] xl:text-[42px] 2xl:text-[48px]",
-                h4: "text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px] xl:text-[28px] 2xl:text-[30px]",
+                h3: "text-[24px] sm:text-[26px] md:text-[28px] lg:text-[30px] xl:text-[34px] 2xl:text-[36px]",
+                h4: "text-[18px] sm:text-[19px] md:text-[19px] lg:text-[20px] xl:text-[21px] 2xl:text-[22px]",
                 h5: "text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px] 2xl:text-[18px]",
                 large: "text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] xl:text-[26px] 2xl:text-[28px]",
                 normal: "text-[14px] md:text-[16px]",
@@ -28,6 +28,7 @@ const headingVariants = cva(
 const headingTagMap = {
     cardh1: "h1",
     h1: "h1",
+    h4: "h4",
     normal: "p",
     medium: "p",
     pageheading: "h2",

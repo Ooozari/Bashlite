@@ -21,7 +21,7 @@ function WriteBlog() {
             content: '',
         },
         validationSchema: AddBlogSchema,
-        onSubmit: (values, {resetForm}) => {
+        onSubmit: (values, { resetForm }) => {
             dispatch(addBlog({
                 title: values.title,
                 content: values.content,
@@ -45,82 +45,86 @@ function WriteBlog() {
                         </div>
                         <form
                             onSubmit={addBlogFormik.handleSubmit}
-                            className="grid gap-6"
                         >
-                            <div className="flex flex-col gap-2 w-full">
-                                <Label htmlFor="author">
-                                    <Paragraph size="label">Author name</Paragraph>
-                                </Label>
+                            <div className='flex flex-col gap-[30px] sm:gap-[32px] md:gap-[34px] lg:gap-[36px] xl:gap-[38px] 2xl:gap-[40px]'>
+                                <div className='flex flex-col gap-[20px] sm:gap-[22px] md:gap-[24px] lg:gap-[26px] xl:gap-[27px] 2xl:gap-[28px]'>
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <Label htmlFor="author">
+                                            <Paragraph size="label">Author name</Paragraph>
+                                        </Label>
 
-                                <div className="relative">
-                                    <Input
-                                        id="author"
-                                        name="author"
-                                        placeholder="Enter author name"
-                                        value={addBlogFormik.values.author}
-                                        onChange={addBlogFormik.handleChange}
-                                        onBlur={addBlogFormik.handleBlur}
-                                        className="w-full"
-                                    />
-                                    {addBlogFormik.touched.author && addBlogFormik.errors.author && (
-                                        <ErrorMessage
-                                            error={addBlogFormik.errors.author}
-                                            touched={addBlogFormik.touched.author}
-                                        />
-                                    )}
+                                        <div className="relative">
+                                            <Input
+                                                id="author"
+                                                name="author"
+                                                placeholder="Enter author name"
+                                                value={addBlogFormik.values.author}
+                                                onChange={addBlogFormik.handleChange}
+                                                onBlur={addBlogFormik.handleBlur}
+                                                className="w-full"
+                                            />
+                                            {addBlogFormik.touched.author && addBlogFormik.errors.author && (
+                                                <ErrorMessage
+                                                    error={addBlogFormik.errors.author}
+                                                    touched={addBlogFormik.touched.author}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <Label htmlFor="title">
+                                            <Paragraph size="label">Blog title</Paragraph>
+                                        </Label>
+
+                                        <div className="relative">
+                                            <Input
+                                                id="title"
+                                                name="title"
+                                                placeholder="Enter title"
+                                                value={addBlogFormik.values.title}
+                                                onChange={addBlogFormik.handleChange}
+                                                onBlur={addBlogFormik.handleBlur}
+                                                className="w-full"
+                                            />
+                                            {addBlogFormik.touched.title && addBlogFormik.errors.title && (
+                                                <ErrorMessage
+                                                    error={addBlogFormik.errors.title}
+                                                    touched={addBlogFormik.touched.title}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <Label htmlFor="price">
+                                            <Paragraph size="label">Blog content</Paragraph>
+                                        </Label>
+                                        <div className='relative'>
+
+
+                                            <Textarea
+                                                id="content"
+                                                name="content"
+                                                placeholder="Enter blog content..."
+                                                value={addBlogFormik.values.content}
+                                                onChange={addBlogFormik.handleChange}
+                                                onBlur={addBlogFormik.handleBlur}
+                                                className="w-full"
+                                            />
+                                            {addBlogFormik.touched.content && addBlogFormik.errors.content && (
+                                                <ErrorMessage
+                                                    error={addBlogFormik.errors.content}
+                                                    touched={addBlogFormik.touched.content}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
+                                <Button type="submit" className="w-full">
+                                    <Paragraph size="btntext">Post Blog</Paragraph>
+                                </Button>
                             </div>
-                            <div className="flex flex-col gap-2 w-full">
-                                <Label htmlFor="title">
-                                    <Paragraph size="label">Blog title</Paragraph>
-                                </Label>
-
-                                <div className="relative">
-                                    <Input
-                                        id="title"
-                                        name="title"
-                                        placeholder="Enter title"
-                                        value={addBlogFormik.values.title}
-                                        onChange={addBlogFormik.handleChange}
-                                        onBlur={addBlogFormik.handleBlur}
-                                        className="w-full"
-                                    />
-                                    {addBlogFormik.touched.title && addBlogFormik.errors.title && (
-                                        <ErrorMessage
-                                            error={addBlogFormik.errors.title}
-                                            touched={addBlogFormik.touched.title}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-2 w-full">
-                                <Label htmlFor="price">
-                                    <Paragraph size="label">Blog content</Paragraph>
-                                </Label>
-                                <div className='relative'>
-
-
-                                    <Textarea
-                                        id="content"
-                                        name="content"
-                                        placeholder="Enter blog content..."
-                                        value={addBlogFormik.values.content}
-                                        onChange={addBlogFormik.handleChange}
-                                        onBlur={addBlogFormik.handleBlur}
-                                        className="w-full"
-                                    />
-                                    {addBlogFormik.touched.content && addBlogFormik.errors.content && (
-                                        <ErrorMessage
-                                            error={addBlogFormik.errors.content}
-                                            touched={addBlogFormik.touched.content}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-
-                            <Button type="submit" className="w-full">
-                                <Paragraph size="btntext">Add Blog</Paragraph>
-                            </Button>
                         </form>
                     </div>
 
