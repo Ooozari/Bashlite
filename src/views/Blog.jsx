@@ -21,7 +21,7 @@ function Blog({ blogId }) {
     return (
         <>
             <div className='md:w-[60%] w-full mx-auto my-[100px]'>
-                <div className='flex flex-col border rounded-[6px] px-4 pt-[17px] pb-[16px] shadow-[0_4px_6px_var(--shadow-medium-color)]  hover:shadow-[0_4px_6px_var(--shadow-heavy-color)] transition'>
+                <div className='flex flex-col border rounded-[6px] px-5 pt-[20px] pb-[19px] shadow-[0_4px_6px_var(--shadow-medium-color)]  hover:shadow-[0_4px_6px_var(--shadow-heavy-color)] transition'>
                     {/* Date and Author */}
                     <Paragraph size='normal' className='flex justify-between items-center text-light mb-5 md:mb-[26px]'>
                         <span>{
@@ -37,10 +37,10 @@ function Blog({ blogId }) {
                     </Paragraph>
 
                     {/* Blog Title */}
-                    <Heading level='h3' className='text-normal font-semibold font-roboto mb-3 md:mb-[16px]'>{blog.title}</Heading>
+                    <Heading level='h3' className='text-normal font-semibold font-roboto mb-3 md:mb-[16px] leading-[1.25]'>{blog.title}</Heading>
 
                     {/* Blog content*/}
-                    <Paragraph size='large' className='text-light'>{blog.content}</Paragraph>
+                    <Paragraph size='large' className='text-light leading-[22px] md:leading-[26px]'>{blog.content}</Paragraph>
                 </div>
             </div>
         </>

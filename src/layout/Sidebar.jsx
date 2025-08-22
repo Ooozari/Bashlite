@@ -5,9 +5,12 @@ import { Heading, Paragraph } from "@/components/ui/typography";
 import Link from "next/link";
 import clsx from "clsx";
 import { Dashboard } from "@/svg/Icon";
+import { useSelector } from "react-redux";
 import { Package, LayoutDashboard, BookText, Settings, PanelRight } from "lucide-react";
 
 function Sidebar() {
+    const blogs = useSelector((state) => state.userBlogs.blogs);
+    const products = useSelector((state) => state.userProducts.products);
     const pathname = usePathname();
     const [isExpanded, setIsExpanded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -92,18 +95,39 @@ function Sidebar() {
                                     : "justify-center w-fit mx-auto"
                             )}
                         >
-                            <Icon
-                                className={clsx(
-                                    "w-5 h-5",
-                                    isActive ? "text-white" : "text-light",
+                            <div className="flex items-center justify-start gap-2">
+                                <div className="relative w-6 h-6">
+                                    <Icon
+                                        className={clsx(
+                                            "w-6 h-6",
+                                            isActive ? "text-white" : "text-light",
+                                        )}
+                                    />
+                                    {!isExpanded && (item.label === "Products" || item.label === "Blogs") && (
+                                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-destructive text-white font-[800] text-[8px] w-[14px] h-[14px] flex items-center justify-center rounded-full">
+                                            {item.label === "Products" ? products.length : blogs.length}
+                                        </span>
+                                    )}
+                                </div>
+
+
+                                {isExpanded && (
+                                    <div className="flex items-center gap-1">
+                                        <span className={clsx("font-[500]", isActive ? "text-white" : "text-light")}>
+                                            {item.label}
+                                        </span>
+
+                                        {(item.label === "Products" || item.label === "Blogs") && (
+                                            <span className="bg-destructive text-white font-[800] text-[10px] w-5 h-5 flex items-center justify-center rounded-full">
+                                                {item.label === "Products" ? products.length : blogs.length}
+                                            </span>
+                                        )}
+                                    </div>
                                 )}
-                            />
-                            {isExpanded && (
-                                <span className={clsx("font-[500]",
-                                    isActive ? "text-white" : "text-light")}>
-                                    {item.label}
-                                </span>
-                            )}
+
+                            </div>
+
+
                         </Link>
                     );
                 })}

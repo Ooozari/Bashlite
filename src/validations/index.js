@@ -71,7 +71,7 @@ export const AddBlogSchema = Yup.object({
   content: Yup.string()
     .required('Content is required'),
   author: Yup.string()
-    .required('Author name is required'),
+    .required('Author name is required').max(20, 'Maximum 20 characters'),
 });
 export const UpdateBlogSchema = Yup.object({
   title: Yup.string()

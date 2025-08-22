@@ -48,6 +48,9 @@ export const blogsSlice = createSlice({
         deleteBlog: (state, action) => {
             state.blogs = state.blogs.filter((blog) => (blog.id !== action.payload))
         },
+        clearAllBlogs: (state) => {
+            state.blogs = [];
+        }
     }
 })
 
@@ -55,6 +58,7 @@ export const {
     addBlog,
     updateBlog,
     deleteBlog,
+    clearAllBlogs,
 } = blogsSlice.actions;
 
 export default blogsSlice.reducer;

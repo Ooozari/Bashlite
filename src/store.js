@@ -6,17 +6,19 @@ import { combineReducers } from "redux";
 import userPreferencesReducer from "@/features/userPreferencesSlice";
 import blogsReducer from "@/features/blogsSlice";
 import productsReducer from "@/features/productsSlice";
+import sessionReducer from "@/features/sessionHistorySlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userPreferences","userBlogs", "userProducts"],
+  whitelist: ["userPreferences","userBlogs", "userProducts", "sessionHistory"],
 };
 
 const rootReducer = combineReducers({
   userPreferences: userPreferencesReducer,
   userBlogs: blogsReducer,
   userProducts: productsReducer,
+  sessionHistory: sessionReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

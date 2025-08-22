@@ -3,11 +3,6 @@ import { loadFromLocalStorage } from "@/libs/storage";
 
 const defaultState = {
     products: [{
-        id: "1",
-        name: "Organic Mango Juice",
-        price: "250",
-        category: "Beverages",
-        imageURL: null,
     }],
 };
 
@@ -30,7 +25,7 @@ export const ProductsSlice = createSlice({
             state.products.push(product)
         },
         updateProduct: (state, action) => {
-            const { id, name, price,category,imageURL } = action.payload;
+            const { id, name, price, category, imageURL } = action.payload;
             const product = state.products.find((product) => product.id === id);
             if (product) {
                 product.name = name;
@@ -43,6 +38,10 @@ export const ProductsSlice = createSlice({
         deleteProduct: (state, action) => {
             state.products = state.products.filter((product) => (product.id !== action.payload))
         },
+
+        clearAllProducts: (state) => {
+            state.products = [];
+        }
     }
 })
 
@@ -50,6 +49,7 @@ export const {
     addProduct,
     updateProduct,
     deleteProduct,
+    clearAllProducts,
 } = ProductsSlice.actions;
 
 export default ProductsSlice.reducer;

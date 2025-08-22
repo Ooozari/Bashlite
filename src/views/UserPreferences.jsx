@@ -8,8 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
-import { User, Pencil, X } from 'lucide-react';
+import { User2, User, Pencil, X, Palette, BookHeart, CookingPot, History } from 'lucide-react';
 import { addFavorites, removeFavorites, removeAllFavorites, resetAllPreferences, updateTheme } from "@/features/userPreferencesSlice"
+import {clearAllProducts} from '@/features/productsSlice'
+import {clearAllBlogs} from '@/features/blogsSlice'
+
+import { setSessionHistory, clearSessionHistory } from '@/features/sessionHistorySlice'
 import { toast } from "sonner"
 import {
     Dialog,
@@ -20,6 +24,15 @@ import {
     DialogTrigger,
     DialogDescription
 } from "@/components/ui/dialog";
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
 import { ErrorMessage } from '@/components/shared'
 import { EditProfileSchema, AddMovieSchema, AddBookSchema } from '@/validations';
 import {
@@ -35,7 +48,8 @@ import { fileToBase64 } from '@/utils/fileHelpers';
 function UserPreferences() {
     const dispatch = useDispatch();
     const userPreferences = useSelector((state) => state.userPreferences);
-    const [preview, setPreview] = useState(userPreferences.avatar)
+    const sessions = useSelector((state) => state.sessionHistory);
+    console.log("Sessions:", sessions);
     const [openEditProfileDialog, setopenEditProfileDialog] = useState(false);
     const [openAddMovieDialog, setopenAddMovieDialog] = useState(false);
     const [openAddBookDialog, setopenAddBookDialog] = useState(false);
@@ -59,6 +73,14 @@ function UserPreferences() {
                 email: values.email,
                 avatar: values.avatar
             }));
+            // Add to session history
+            dispatch(
+                setSessionHistory({
+                    pageName: "User Preferences",
+                    pageUrl: window.location.pathname,
+                    actionType: "Edited profile details",
+                })
+            );
             resetForm();
             setopenEditProfileDialog(false);
         },
@@ -77,12 +99,21 @@ function UserPreferences() {
                     item: values.movie,
                 })
             );
+            // Add to session history
+            dispatch(
+                setSessionHistory({
+                    pageName: "User Preferences", // or wherever this form is located
+                    pageUrl: window.location.pathname, // current URL
+                    actionType: `Added favorite movie: "${values.movie}"`,
+                })
+            );
             resetForm();
             setopenAddMovieDialog(false)
         },
     });
 
     const movies = useSelector((state) => state.userPreferences.favorites.movies);
+
     const addBookFormik = useFormik({
         initialValues: {
             book: "",
@@ -95,11 +126,21 @@ function UserPreferences() {
                     item: values.book,
                 })
             );
+            // Add to session history
+            dispatch(
+                setSessionHistory({
+                    pageName: "User Preferences", // or wherever this form is located
+                    pageUrl: window.location.pathname, // current URL
+                    actionType: `Added favorite book: "${values.book}"`,
+                })
+            );
+
             resetForm();
             setopenAddBookDialog(false)
             toast.error(`Failed to add "${values.book}" to your favorites.`);
         },
     });
+
     const books = useSelector((state) => state.userPreferences.favorites.books);
 
     const handleFileChange = async (event) => {
@@ -113,45 +154,40 @@ function UserPreferences() {
 
     return (
         <>
-
-            {/* heading */}
-            {/* <div className='px-[20px]'>
-                <Heading level='pageheading' className="font-[700] text-dark font-roboto">User Preferences</Heading>
-            </div> */}
             {/* section */}
-            <div className='flex flex-col gap-10  max-w-full'>
+            <div className='flex flex-col gap-[40px] sm:gap-[44px] md:gap-[48px] lg:gap-[52px] xl:gap-[56px] 2xl:gap-[60px]'>
+
+
                 {/* Profile section */}
-                <div className='flex items-center justify-between'>
+                <div className='flex flex-col md:flex-row gap-3 md:gap-0 md:items-center md:justify-between'>
 
                     {/* Avatar and Name */}
-                    <div className='flex items-center gap-4'>
+                    <div className='flex items-center gap-3 md:gap-4'>
                         {/* Avatar */}
-                        <div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative'>
+                        <div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative rounded-lg'>
                             {userPreferences.avatar ? (
                                 <Image
                                     src={userPreferences.avatar}
                                     alt="user avatar"
                                     fill
-                                    className="object-cover w-full h-full rounded-[4px]"
+                                    className="object-cover w-full h-full rounded-lg"
                                     onError={(e) => { e.currentTarget.src = ""; }} // fallback if broken
                                 />
                             ) : (
-                                <div className='w-full h-full bg-foreground/50 flex justify-center items-center rounded-[4px]'>
-                                    <User className="w-8 h-8 text-white" />
+                                <div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative rounded-lg bg-profile-bg flex justify-center items-center'>
+                                    <User className="w-[24px] h-[24px] sm:w-[27px] sm:h-[27px] md:w-[30px] md:h-[30px] lg:w-[33px] lg:h-[33px] xl:w-[36px] xl:h-[36px] 2xl:w-[40px] 2xl:h-[40px] text-profile-icon" />
                                 </div>
                             )}
                         </div>
 
-
                         <div>
-                            <Heading level="medium" className="font-[700] text-dark">{userPreferences.username}</Heading>
-                            <Paragraph size='medium' className="font-[500] text-light">{userPreferences.email}</Paragraph>
+                            <Heading level="lg" className="font-[800] text-dark font-roboto">{userPreferences.username}</Heading>
+                            <Paragraph size='large' className="font-[500] text-light">{userPreferences.email}</Paragraph>
                         </div>
-
                     </div>
 
                     {/* Edit profile button */}
-                    <div>
+                    <div className="self-end">
                         <Button onClick={() => setopenEditProfileDialog(true)}>
                             <Paragraph size="btntext" className="flex items-center gap-1">
                                 <span><Pencil /></span>
@@ -166,9 +202,10 @@ function UserPreferences() {
                     <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
                         <div>
                             <Heading
-                                className="text-dark font-[600] font-roboto relative pb-2"
+                                className="text-dark font-[600] font-roboto relative pb-2 flex gap-2 items-center"
                                 level="sectionheading"
                             >
+                                <Palette className="text-primary" />
                                 Theme Setting
                             </Heading>
                             <div className="w-full h-[1px] bg-primary rounded"></div>
@@ -232,9 +269,10 @@ function UserPreferences() {
                     <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
                         <div className="">
                             <Heading
-                                className="text-dark font-[600] font-roboto relative pb-2"
+                                className="text-dark font-[600] font-roboto relative pb-2 flex gap-2 items-center"
                                 level="sectionheading"
                             >
+                                <BookHeart className="text-primary" />
                                 Favorite items
                             </Heading>
                             <div className="w-full h-[1px] bg-primary rounded"></div>
@@ -250,15 +288,28 @@ function UserPreferences() {
                                             movies.map((movies, index) => (
                                                 <span
                                                     key={index}
-                                                    className='flex gap-1 items-center font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>{movies} <X onClick={() =>
-                                                        dispatch(
-                                                            removeFavorites({
-                                                                category: "movies",
-                                                                item: movies,
-                                                            })
-                                                        )
-                                                    }
-                                                        className="size-3 cursor-pointer" /></span>
+                                                    className='flex gap-1 items-center font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>{movies}
+                                                    <X
+                                                        onClick={() => {
+                                                            dispatch(
+                                                                removeFavorites({
+                                                                    category: "movies",
+                                                                    item: movies,
+                                                                })
+                                                            )
+                                                            // Add to session history
+                                                            dispatch(
+                                                                setSessionHistory({
+                                                                    pageName: "User Preferences",
+                                                                    pageUrl: window.location.pathname,
+                                                                    actionType: `Deleted movie: ${movies}`,
+                                                                })
+                                                            );
+
+                                                        }
+                                                        }
+                                                        className="size-3 cursor-pointer" />
+                                                </span>
                                             )
                                             )
                                         ) : (<Paragraph size="normal" className='font-[500] text-light'>No movies found</Paragraph>)}
@@ -267,7 +318,20 @@ function UserPreferences() {
                                 </div>
                                 <div className='flex gap-2'>
                                     <Button
-                                        onClick={() => (dispatch(removeAllFavorites({ category: "movies", })))}
+                                        onClick={() => {
+                                            // Remove all movies
+                                            dispatch(removeAllFavorites({ category: "movies" }));
+
+                                            // session history
+                                            dispatch(
+                                                setSessionHistory({
+                                                    pageName: "User Preferences",
+                                                    pageUrl: window.location.pathname,
+                                                    actionType: "Deleted all movies",
+                                                })
+                                            );
+                                        }}
+
                                         className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
                                         <Paragraph size="btntext" className='font-bold'>
                                             Delete
@@ -290,15 +354,23 @@ function UserPreferences() {
                                             books.map((book, index) => (
                                                 <span
                                                     key={index}
-                                                    className='flex gap-1 items-center font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>{book} <X onClick={() =>
-                                                        dispatch(
-                                                            removeFavorites({
-                                                                category: "books",
-                                                                item: book,
-                                                            })
-                                                        )
-                                                    }
-                                                        className="size-3 cursor-pointer" /></span>
+                                                    className='flex gap-1 items-center font-[500] text-primary border border-primary px-2 py-1 rounded-[6px]'>{book}
+                                                    <X
+                                                        onClick={() => {
+                                                            dispatch(
+                                                                setSessionHistory({
+                                                                    pageName: "User Preferences",
+                                                                    pageUrl: window.location.pathname,
+                                                                    actionType: `Deleted book: ${book}`,
+                                                                })
+                                                            );
+                                                            dispatch(removeFavorites({ category: "books", item: book }));
+
+
+                                                        }}
+                                                        className="size-3 cursor-pointer"
+                                                    />
+                                                </span>
                                             )
                                             )
                                         ) : (<Paragraph size="normal" className='font-[500] text-light'>No book found</Paragraph>)}
@@ -307,7 +379,19 @@ function UserPreferences() {
                                 </div>
                                 <div className='flex gap-2'>
                                     <Button
-                                        onClick={() => (dispatch(removeAllFavorites({ category: "books", })))}
+                                        onClick={() => {
+
+                                            dispatch(removeAllFavorites({ category: "books", }))
+                                            // session history
+                                            dispatch(
+                                                setSessionHistory({
+                                                    pageName: "User Preferences",
+                                                    pageUrl: window.location.pathname,
+                                                    actionType: "Deleted all books",
+                                                })
+                                            );
+                                        }
+                                        }
                                         className="hover:bg-destructive/10 text-destructive hover:text-destructive h-8 px-1" variant="ghost">
                                         <Paragraph size="btntext" className="font-[700]">
                                             Delete
@@ -324,13 +408,82 @@ function UserPreferences() {
                         </div>
 
                     </div>
+                    {/* Session History */}
+                    <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
+                        <div className="">
+                            <Heading
+                                className="text-dark font-[600] font-roboto relative pb-2 flex gap-2 items-center"
+                                level="sectionheading"
+                            >
+                                <History className="text-primary" />
+                                Session History
+                            </Heading>
+                            <div className="w-full h-[1px] bg-primary rounded"></div>
+                        </div>
+
+                        <div className="flex flex-row items-center justify-between gap-4">
+                            <Paragraph size="normal" className="text-light">
+                                Clear all session history. This action cannot be undone.
+                            </Paragraph>
+                            <Paragraph
+                                size="normal"
+                                onClick={() => dispatch(clearSessionHistory())}
+                                className="font-[800] text-destructive hover:cursor-pointer whitespace-nowrap"
+                            >
+                                Clear All
+                            </Paragraph>
+                        </div>
+
+                        <div className="max-h-[400px] overflow-y-auto">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead className="w-[20%]">Page Name</TableHead>
+                                        <TableHead className="w-[50%]">Page URL</TableHead>
+                                        <TableHead className="w-[15%]">Visited At</TableHead>
+                                        <TableHead className="w-[15%]">Action Performed</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {sessions.length > 0 ? (
+                                        sessions.map((session) => (
+                                            <TableRow key={session.sessionId}>
+                                                <TableCell>{session.pageName}</TableCell>
+                                                <TableCell>{session.pageUrl}</TableCell>
+                                                <TableCell>
+                                                    {
+                                                        new Date(session.timestamp).toLocaleString("en-US", {
+                                                            month: "short",
+                                                            day: "numeric",
+                                                            year: "numeric",
+                                                            hour: "numeric",
+                                                            minute: "numeric",
+                                                            hour12: true
+                                                        })
+                                                    }
+                                                </TableCell>
+                                                <TableCell>{session.actionType}</TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : (<TableRow>
+                                        <TableCell colSpan={4} className="text-center">
+                                            <Paragraph size='xl' className="text-extraLight">No data to display</Paragraph>
+
+                                        </TableCell>
+                                    </TableRow>)}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    </div>
+
                     {/* Reset all local storage data */}
                     <div className="border bg-destructive/5 rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
                         <div className="relative inline">
                             <Heading
-                                className="text-destructive font-[600] font-roboto relative pb-2"
+                                className="text-destructive font-[600] font-roboto relative pb-2 flex gap-2 items-center"
                                 level="sectionheading"
                             >
+                                <CookingPot />
                                 Reset Data
                             </Heading>
                             <span className="absolute left-0 bottom-0 w-full h-[1px] bg-destructive rounded"></span>
@@ -342,7 +495,12 @@ function UserPreferences() {
                                     <Heading level='normal' className="text-dark font-[700]">Clear Local Storage</Heading>
                                     <Paragraph size='normal' className="font-[500] text-light">Permanently remove all saved preferences, products, and blogs from local storage. This action cannot be undone.</Paragraph>
                                 </div>
-                                <Button className="" variant="destructive" onClick={() => (setopenConfirmResetDialog(true))}>
+                                <Button className="" variant="destructive" onClick={() => {
+                                    setopenConfirmResetDialog(true)
+                                    
+                                }
+
+                                }>
                                     <Paragraph size="btntext" className="font-[700]">
                                         Reset All Data
                                     </Paragraph>
@@ -352,10 +510,10 @@ function UserPreferences() {
 
                     </div>
                 </div>
-            </div>
+            </div >
 
             {/* Edit Profile*/}
-            <Dialog open={openEditProfileDialog} onOpenChange={setopenEditProfileDialog}>
+            < Dialog open={openEditProfileDialog} onOpenChange={setopenEditProfileDialog} >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-start">Update Profile Information</DialogTitle>
@@ -447,10 +605,10 @@ function UserPreferences() {
                         </Button>
                     </form>
                 </DialogContent>
-            </Dialog>
+            </Dialog >
 
             {/*Add movie*/}
-            <Dialog open={openAddMovieDialog} onOpenChange={setopenAddMovieDialog}>
+            < Dialog open={openAddMovieDialog} onOpenChange={setopenAddMovieDialog} >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-start">Add a New Movie</DialogTitle>
@@ -488,10 +646,10 @@ function UserPreferences() {
                         </Button>
                     </form>
                 </DialogContent>
-            </Dialog>
+            </Dialog >
 
             {/*Add book*/}
-            <Dialog open={openAddBookDialog} onOpenChange={setopenAddBookDialog}>
+            < Dialog open={openAddBookDialog} onOpenChange={setopenAddBookDialog} >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-start">Add a New Book</DialogTitle>
@@ -529,10 +687,10 @@ function UserPreferences() {
                         </Button>
                     </form>
                 </DialogContent>
-            </Dialog>
+            </Dialog >
 
             {/* Are you sure you want to reset? */}
-            <Dialog open={openConfirmResetDialog} onOpenChange={setopenConfirmResetDialog}>
+            < Dialog open={openConfirmResetDialog} onOpenChange={setopenConfirmResetDialog} >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className='text-start'>Confirm Data Reset</DialogTitle>
@@ -554,8 +712,10 @@ function UserPreferences() {
                             <Button
                                 onClick={() => {
                                     dispatch(resetAllPreferences())
+                                    dispatch(clearSessionHistory())
+                                    dispatch(clearAllProducts())
+                                    dispatch(clearAllBlogs())
                                     setopenConfirmResetDialog(false)
-                                    toast.success("All data has been reset")
                                 }}
                                 variant='destructive'
                                 className='w-full'
@@ -565,7 +725,7 @@ function UserPreferences() {
                         </div>
                     </DialogFooter>
                 </DialogContent>
-            </Dialog>
+            </Dialog >
         </>
     )
 

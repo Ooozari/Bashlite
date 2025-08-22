@@ -36,8 +36,8 @@ function Home() {
               onError={(e) => { e.currentTarget.src = ""; }}
             />
           ) : (
-            <div className='w-full h-full bg-foreground/50 flex justify-center items-center'>
-              <User className="w-6 h-6 text-white" />
+            <div className='w-full h-full bg-profile-bg flex justify-center items-center rounded-[4px]'>
+              <User className="w-[22px] h-[22px] sm:w-[22px] sm:h-[22px] md:w-[23px] md:h-[23px] lg:w-[24px] lg:h-[24px] xl:w-[26px] xl:h-[26px] 2xl:w-[28px] 2xl:h-[28px] text-profile-icon" />
             </div>
           )}
         </div>
