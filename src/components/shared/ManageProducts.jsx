@@ -32,7 +32,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Package } from 'lucide-react';
 import { addProduct, deleteProduct, updateProduct } from '@/features/productsSlice';
 import { fileToBase64 } from '@/utils/fileHelpers';
-
+import { setSessionHistory } from '@/features/sessionHistorySlice'
 function ManageProducts() {
     const products = useSelector((state) => state.userProducts.products)
     const [openEditProductDialog, setopenEditProductDialog] = useState(false)
@@ -59,7 +59,15 @@ function ManageProducts() {
                 price: values.price,
                 category: values.category,
             }))
-            console.log("Dispatching updateProduct:", values);
+
+            dispatch(
+                setSessionHistory({
+                    pageName: "Product",
+                    pageUrl: window.location.pathname,
+                    actionType: `Edited a product: ${values.name}`,
+                })
+            );
+
             setopenEditProductDialog(false)
         },
     });
@@ -89,6 +97,14 @@ function ManageProducts() {
                 price: values.price,
                 category: values.category,
             }))
+
+            dispatch(
+                setSessionHistory({
+                    pageName: "Product",
+                    pageUrl: window.location.pathname,
+                    actionType: `Added a product: ${values.name}`,
+                })
+            );
             resetForm()
             setopenAddProductDialog(false)
         },
@@ -108,18 +124,18 @@ function ManageProducts() {
         <>
             <div className='flex flex-col gap-3 md:gap-5'>
                 <div className='inline-flex justify-end'>
-                    <Button 
-                    variant="secondary" size="sm"
-                    onClick={() => setopenAddProductDialog(true)}>Add Product</Button>
+                    <Button
+                        variant="secondary" size="sm"
+                        onClick={() => setopenAddProductDialog(true)}>Add Product</Button>
                 </div>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[30%]" >Image</TableHead>
+                            <TableHead className="w-[20%]" >Image</TableHead>
                             <TableHead className="w-[25%]">Name</TableHead>
-                            <TableHead className="w-[15%]">Category</TableHead>
-                            <TableHead className="w-[15%]">Price</TableHead>
-                            <TableHead className=""></TableHead>
+                            <TableHead className="w-[25%]">Category</TableHead>
+                            <TableHead className="w-[20%]">Price</TableHead>
+                            <TableHead className="w-[10%]"></TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -147,10 +163,17 @@ function ManageProducts() {
                                         <Button
                                             onClick={() => {
                                                 dispatch(deleteProduct(product.id))
+                                                dispatch(
+                                                    setSessionHistory({
+                                                        pageName: "Product",
+                                                        pageUrl: window.location.pathname,
+                                                        actionType: `Deleted a product: ${product.name}`,
+                                                    })
+                                                );
                                             }}
                                             variant="ghost" className="bg-destructive/20 hover:bg-destructive/10 text-destructive hover:text-destructive p-[6px]">
                                             <div className='w-[14px] h-[14px] sm:w-[15px] sm:h-[15px] md:w-[16px] md:h-[16px] lg:w-[17px] lg:h-[17px] xl:w-[18px] xl:h-[18px] 2xl:w-[20px] 2xl:h-[20px] flex items-center justify-center'>
-                                                <Trash  className='w-full h-full' />
+                                                <Trash className='w-full h-full' />
                                             </div>
 
                                         </Button>
