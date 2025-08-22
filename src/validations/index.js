@@ -30,6 +30,7 @@ export const AddBookSchema = Yup.object({
 export const EditProductSchema = Yup.object({
   name: Yup.string()
     .min(3, 'Minimum 3 characters')
+    .max(50, 'Minimum 50 characters')
     .required('Name is required'),
 
   price: Yup.number()
@@ -46,6 +47,7 @@ export const EditProductSchema = Yup.object({
 export const AddProductSchema = Yup.object({
   name: Yup.string()
     .min(3, 'Minimum 3 characters')
+    .max(50, 'Minimum 50 characters')
     .required('Name is required'),
 
   price: Yup.number()

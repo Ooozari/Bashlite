@@ -13,12 +13,19 @@
   --color-light: var(--text-light);
   --color-dark: var(--text-dark);
   --color-extraLight: var(--text-extra-light);
+  --color-priceValue: var(--text-price-value);
+  --color-tableHeader: var(--table-header-bg);
+  
+
 
   /* Primary */
   --color-primary: var(--primary);
   --color-primary-border: var(--primary-border);
   --color-primary-page-bg: var(--primary-page-bg);
   --color-primary-card-bg: var(--primary-card-bg);
+  --color-tab-bg: var(--tab-bg);
+
+
 
   /* Mapped shadow variables */
   --shadow-light-color: var(--shadow-light);
@@ -95,6 +102,9 @@
   --text-light: #666666;
   --text-dark: #1A1A1A;
   --text-extra-light: #BBBBBB;
+  --text-price-value: #5a43ff;
+  --table-header-bg: #e8e2ff;
+
 
   /* Primary */
   --primary: #816bff;
@@ -103,6 +113,7 @@
   /* Much lighter than #f5f3ff */
   --primary-card-bg: #fdfcff;
   /* Almost white but keeps a subtle tint */
+  --tab-bg: #d8d0ff;
 
 
   /* Shadow colors */
@@ -140,11 +151,16 @@
   --ring: var(--primary);
 
   /* Charts */
---chart-1: oklch(0.646 0.222 41.116);  /* Base tone */
---chart-2: oklch(0.646 0.222 184.704); /* Balanced tone */
---chart-3: oklch(0.646 0.222 227.392); /* Balanced tone */
---chart-4: oklch(0.646 0.222 316);     /* Balanced tone */
---chart-5: oklch(0.646 0.222 44);      /* Balanced tone */
+  --chart-1: oklch(0.646 0.222 41.116);
+  /* Base tone */
+  --chart-2: oklch(0.646 0.222 184.704);
+  /* Balanced tone */
+  --chart-3: oklch(0.646 0.222 227.392);
+  /* Balanced tone */
+  --chart-4: oklch(0.646 0.222 316);
+  /* Balanced tone */
+  --chart-5: oklch(0.646 0.222 44);
+  /* Balanced tone */
 
 
 
@@ -171,6 +187,9 @@
   /* darker than #1a1a26 */
   --primary-card-bg: #1a1a24;
   /* darker than #222233 */
+  --tab-bg: #2f2a4a;
+  --table-header-bg: #2a2547;
+
 
   /* Shadow colors */
   --shadow-light: rgba(129, 107, 255, 0.2);
@@ -186,6 +205,7 @@
   --text-normal: #e5e5e5;
   --text-light: #a3a3a3;
   --text-extra-light: #777777;
+  --text-price-value: #9c88ff;
 
   /* Components */
   --card: oklch(0.205 0 0);
@@ -235,4 +255,7 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+@theme {
+  --breakpoint-xs: 25rem;
 }

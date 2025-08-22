@@ -7,11 +7,12 @@ function Product() {
 
     return (
         <>
-            <div className='flex flex-col gap-5'>
-                <div>
-                    <Heading level='h3' className="font-[700] font-roboto text-normal">Manage Your Products</Heading>
-                    <Paragraph className="text-light font-[500] max-w-[600px]">
-                        View, add, edit, or remove products in your dashboard. Keep your product catalog up-to-date and organized for better management.
+            <div className='flex flex-col gap-[40px] sm:gap-[45px] md:gap-[50px] lg:gap-[55px] xl:gap-[60px] 2xl:gap-[64px]
+'>
+                <div className='flex flex-col gap-1'>
+                    <Heading level='h3' className="font-[700] text-normal">Manage Your Products</Heading>
+                    <Paragraph size='large' className="text-light font-[500]">
+                        View, add, edit, or remove products in your dashboard. Keep your product catalog up-to-date.
                     </Paragraph>
                 </div>
 

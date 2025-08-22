@@ -9,10 +9,10 @@ function Table({
   ...props
 }) {
   return (
-    <div data-slot="table-container" className="relative w-full overflow-x-auto">
+    <div data-slot="table-container" className="relative w-full overflow-x-auto rounded-t-[6px]">
       <table
         data-slot="table"
-        className={cn("table-fixed min-w-full caption-bottom text-sm", className)}
+        className={cn("table-fixed min-w-full caption-bottom text-sm ", className)}
         {...props} />
     </div>
   );
@@ -25,7 +25,7 @@ function TableHeader({
   return (
     <thead
       data-slot="table-header"
-      className={cn("[&_tr]:border-b", className)}
+      className={cn("[&_tr]:border-b ", className)}
       {...props} />
   );
 }
@@ -77,7 +77,7 @@ function TableHead({
     <th
       data-slot="table-head"
       className={cn(
-        "bg-primary-page-bg text-normal h-10 font-roboto px-4 text-left align-middle font-[800] whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "bg-tableHeader text-normal h-10 font-roboto px-4 text-left align-middle font-[800] whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props} />

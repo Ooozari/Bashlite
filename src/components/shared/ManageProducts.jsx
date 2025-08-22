@@ -106,9 +106,11 @@ function ManageProducts() {
 
     return (
         <>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-3 md:gap-5'>
                 <div className='inline-flex justify-end'>
-                    <Button onClick={() => setopenAddProductDialog(true)}>Add Product</Button>
+                    <Button 
+                    variant="secondary" size="sm"
+                    onClick={() => setopenAddProductDialog(true)}>Add Product</Button>
                 </div>
                 <Table>
                     <TableHeader>
@@ -141,13 +143,16 @@ function ManageProducts() {
                                 <TableCell className="">${product.price}</TableCell>
 
                                 <TableCell className="text-right sticky right-0 z-20 ">
-                                    <div className='inline-flex gap-2 bg-white p-1 justify-end'>
+                                    <div className='inline-flex gap-2 bg-primary-page-bg p-1 justify-end'>
                                         <Button
                                             onClick={() => {
                                                 dispatch(deleteProduct(product.id))
                                             }}
-                                            variant="ghost" className="bg-destructive/20 hover:bg-destructive/10 text-destructive hover:text-destructive h-7 px-1">
-                                            <Trash />
+                                            variant="ghost" className="bg-destructive/20 hover:bg-destructive/10 text-destructive hover:text-destructive p-[6px]">
+                                            <div className='w-[14px] h-[14px] sm:w-[15px] sm:h-[15px] md:w-[16px] md:h-[16px] lg:w-[17px] lg:h-[17px] xl:w-[18px] xl:h-[18px] 2xl:w-[20px] 2xl:h-[20px] flex items-center justify-center'>
+                                                <Trash  className='w-full h-full' />
+                                            </div>
+
                                         </Button>
                                         <Button
                                             onClick={() => {
@@ -155,8 +160,11 @@ function ManageProducts() {
                                                 setopenEditProductDialog(true)
 
                                             }}
-                                            variant="ghost" className="bg-primary/20 hover:bg-primary/10 text-primary hover:text-primary px-1 h-7">
-                                            <Pencil />
+                                            variant="ghost" className="bg-primary/20 hover:bg-primary/10 text-primary hover:text-primary  p-[6px]">
+                                            <div className='w-[14px] h-[14px] sm:w-[15px] sm:h-[15px] md:w-[16px] md:h-[16px] lg:w-[17px] lg:h-[17px] xl:w-[18px] xl:h-[18px] 2xl:w-[20px] 2xl:h-[20px] flex items-center justify-center'>
+                                                <Pencil className='w-full h-full' />
+                                            </div>
+
                                         </Button>
                                     </div>
 

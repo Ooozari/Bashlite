@@ -1,15 +1,17 @@
 'use client';
 import React from 'react'
 import { ProductCard } from '@/components/shared';
-import { Paragraph } from "@/components/ui/typography"; 
+import { Paragraph } from "@/components/ui/typography";
 import { useSelector } from 'react-redux';
 
 function DisplayProduct() {
-  const products = useSelector((state)=> (state.userProducts.products))
- 
+  const products = useSelector((state) => (state.userProducts.products))
 
   return (
-    <div className='grid gap-3 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]'>
+    <div className={`grid gap-5 justify-center sm:justify-start ${products.length <= 2
+          ? "[grid-template-columns:repeat(auto-fit,minmax(260px,300px))]"
+          : "[grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]"
+        }`}>
       {products.length > 0 ? (
         products.map(product => (
           <ProductCard
@@ -21,7 +23,7 @@ function DisplayProduct() {
           />
         ))
       ) : (
-        <Paragraph size='xl' className="text-light font-[500]">
+        <Paragraph size='xxl' className="text-extraLight text-center font-[500]">
           No data to display
         </Paragraph>
       )}
