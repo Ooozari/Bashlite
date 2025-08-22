@@ -10,6 +10,8 @@ import { Package, LayoutDashboard, BookText, Settings, PanelRight } from "lucide
 
 function Sidebar() {
     const blogs = useSelector((state) => state.userBlogs.blogs);
+    const sessions = useSelector((state) => state.sessionHistory);
+    console.log("length of session", sessions.length)
     const products = useSelector((state) => state.userProducts.products);
     const pathname = usePathname();
     const [isExpanded, setIsExpanded] = useState(false);
@@ -103,9 +105,15 @@ function Sidebar() {
                                             isActive ? "text-white" : "text-light",
                                         )}
                                     />
-                                    {!isExpanded && (item.label === "Products" || item.label === "Blogs") && (
+                                    {!isExpanded && (item.label === "Products" || item.label === "Blogs"  || item.label === "Settings") && (
                                         <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-destructive text-white font-[800] text-[8px] w-[14px] h-[14px] flex items-center justify-center rounded-full">
-                                            {item.label === "Products" ? products.length : blogs.length}
+                                            {item.label === "Products" ? products.length
+                                                : item.label === "Blogs" ? blogs.length
+                                                    : item.label === "Settings" ? sessions.length
+                                                        : null
+                                            }
+
+
                                         </span>
                                     )}
                                 </div>
@@ -117,9 +125,14 @@ function Sidebar() {
                                             {item.label}
                                         </span>
 
-                                        {(item.label === "Products" || item.label === "Blogs") && (
+                                        {(item.label === "Products" || item.label === "Blogs" || item.label === "Settings") && (
                                             <span className="bg-destructive text-white font-[800] text-[10px] w-5 h-5 flex items-center justify-center rounded-full">
-                                                {item.label === "Products" ? products.length : blogs.length}
+                                                {item.label === "Products" ? products.length
+                                                    : item.label === "Blogs" ? blogs.length
+                                                        : item.label === "Settings" ? sessions.length
+                                                            : null
+                                                }
+
                                             </span>
                                         )}
                                     </div>
