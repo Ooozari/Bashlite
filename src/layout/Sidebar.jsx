@@ -105,14 +105,13 @@ function Sidebar() {
                                             isActive ? "text-white" : "text-light",
                                         )}
                                     />
-                                    {!isExpanded && (item.label === "Products" || item.label === "Blogs"  || item.label === "Settings") && (
+                                    {!isExpanded && (item.label === "Products" || item.label === "Blogs" || item.label === "Settings") && (
                                         <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-destructive text-white font-[800] text-[8px] w-[14px] h-[14px] flex items-center justify-center rounded-full">
                                             {item.label === "Products" ? products.length
                                                 : item.label === "Blogs" ? blogs.length
                                                     : item.label === "Settings" ? sessions.length
                                                         : null
                                             }
-
 
                                         </span>
                                     )}
