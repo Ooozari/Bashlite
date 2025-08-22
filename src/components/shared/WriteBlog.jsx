@@ -11,6 +11,7 @@ import { ErrorMessage } from '@/components/shared'
 import { useDispatch } from 'react-redux';
 import { addBlog } from '@/features/blogsSlice';
 import { toast } from 'sonner';
+import { setSessionHistory } from '@/features/sessionHistorySlice'
 
 function WriteBlog() {
     const dispatch = useDispatch();
@@ -27,6 +28,13 @@ function WriteBlog() {
                 content: values.content,
                 author: values.author,
             }))
+            dispatch(
+                setSessionHistory({
+                    pageName: "Blogs",
+                    pageUrl: window.location.pathname,
+                    actionType: `Posted blog ${values.author}`,
+                })
+            );
             resetForm();
             toast.success("Blog added successfull")
         },

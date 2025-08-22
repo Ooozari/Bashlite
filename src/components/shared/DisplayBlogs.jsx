@@ -8,11 +8,11 @@ function DisplayBlogs() {
     const blogs = useSelector((state) => state.userBlogs.blogs);
     return (
         <>
-            <div className={`grid gap-3 justify-center sm:justify-start ${blogs.length <= 1
-                ? "[grid-template-columns:repeat(auto-fit,minmax(0px,400px))]"
-                : "[grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
-                }`}>
-                {blogs.length > 0 ? (blogs.map(blog => (
+            {blogs.length > 0 ? (blogs.map(blog => (
+                <div className={`grid gap-3 justify-center sm:justify-start ${blogs.length <= 1
+                    ? "[grid-template-columns:repeat(auto-fit,minmax(0px,400px))]"
+                    : "[grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+                    }`}>
                     <BlogCard
                         key={blog.id}
                         id={blog.id}
@@ -21,11 +21,11 @@ function DisplayBlogs() {
                         author={blog.author}
                         date={blog.publishedDate}
                     />
-                ))) : (
-                    <Paragraph size='xxl' className="text-extraLight text-center font-[500]">No data to display</Paragraph>
-                )}
+                </div>
+            ))) : (
+                <Paragraph size='xxl' className="text-extraLight text-center font-[500] ">No blogs available. Please post a blog to view it here.</Paragraph>
+            )}
 
-            </div>
         </>
     )
 }

@@ -1,8 +1,11 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Heading, Paragraph } from '@/components/ui/typography'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSessionHistory } from '@/features/sessionHistorySlice'
+
 function Blog({ blogId }) {
+    const dispatch = useDispatch();
     console.log("This is blogId", blogId);
     const blog = useSelector(state =>
         state.userBlogs.blogs.find(blog => blog.id === blogId)
@@ -17,6 +20,16 @@ function Blog({ blogId }) {
         );
     }
 
+    useEffect(() => {
+        // Add to session history
+        dispatch(
+            setSessionHistory({
+                pageName: "Blogs",
+                pageUrl: window.location.pathname,
+                actionType: `Reading blog ${blogId}`,
+            })
+        );
+    }, [dispatch, blogId]);
 
     return (
         <>

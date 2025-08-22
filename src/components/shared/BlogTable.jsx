@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { deleteBlog } from '@/features/blogsSlice';
 import { Heading, Paragraph } from '@/components/ui/typography'
 import { useRouter } from 'next/navigation';
+import { setSessionHistory } from '@/features/sessionHistorySlice'
 
 function BlogTable() {
     const router = useRouter()
@@ -53,14 +54,28 @@ function BlogTable() {
                                 <TableCell className="text-right sticky right-0 z-20">
                                     <div className="inline-flex gap-2 bg-primary-page-bg p-1 justify-end">
                                         <Button
-                                            onClick={() => dispatch(deleteBlog(blog.id))}
+                                            onClick={() => {
+                                                dispatch(deleteBlog(blog.id))
+                                                dispatch(
+                                                    setSessionHistory({
+                                                        pageName: "Blogs",
+                                                        pageUrl: window.location.pathname,
+                                                        actionType: `Deleted a blog: ${blog.id}`,
+                                                    })
+                                                );
+                                            }
+
+                                            }
                                             variant="ghost" className="bg-destructive/20 hover:bg-destructive/10 text-destructive hover:text-destructive p-[6px]">
                                             <div className='w-[14px] h-[14px] sm:w-[15px] sm:h-[15px] md:w-[16px] md:h-[16px] lg:w-[17px] lg:h-[17px] xl:w-[18px] xl:h-[18px] 2xl:w-[20px] 2xl:h-[20px] flex items-center justify-center'>
                                                 <Trash className='w-full h-full' />
                                             </div>
                                         </Button>
                                         <Button
-                                            onClick={() => router.push(`/edit-blog/${blog.id}`)}
+                                            onClick={() => 
+                                                {router.push(`/edit-blog/${blog.id}`)
+                                            
+                                            }}
                                             variant="ghost" className="bg-primary/20 hover:bg-primary/10 text-primary hover:text-primary p-[6px]">
                                             <div className='w-[14px] h-[14px] sm:w-[15px] sm:h-[15px] md:w-[16px] md:h-[16px] lg:w-[17px] lg:h-[17px] xl:w-[18px] xl:h-[18px] 2xl:w-[20px] 2xl:h-[20px] flex items-center justify-center'>
                                                 <Pencil className='w-full h-full' />

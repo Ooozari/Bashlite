@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Heading, Paragraph } from '@/components/ui/typography';
 import { useFormik } from 'formik';
@@ -12,6 +12,7 @@ import { ErrorMessage } from '@/components/shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBlog } from '@/features/blogsSlice';
 import { toast } from 'sonner';
+import { setSessionHistory } from '@/features/sessionHistorySlice'
 
 
 function EditBlog({ blogId }) {
@@ -33,13 +34,20 @@ function EditBlog({ blogId }) {
         },
         validationSchema: UpdateBlogSchema,
         onSubmit: (values) => {
-            
+
             dispatch(updateBlog({
                 id: blogId,
                 title: values.title,
                 content: values.content,
             }));
-           toast.success("Blog updated successfull")
+            dispatch(
+                setSessionHistory({
+                    pageName: "Blogs",
+                    pageUrl: window.location.pathname,
+                    actionType: `Edited a blog: ${blogId}`,
+                })
+            );
+            toast.success("Blog updated successfull")
         },
     });
 
