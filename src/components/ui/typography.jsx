@@ -8,6 +8,7 @@ const headingVariants = cva(
     {
         variants: {
             level: {
+                cardh1: "text-[32px] sm:text-[38px] md:text-[44px] lg:text-[50px] xl:text-[56px] 2xl:text-[64px]",
                 h1: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-[64px]",
                 h3: "text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[48px]",
                 h4: "text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px] xl:text-[28px] 2xl:text-[30px]",
@@ -25,6 +26,7 @@ const headingVariants = cva(
     }
 );
 const headingTagMap = {
+    cardh1: "h1",
     h1: "h1",
     normal: "p",
     medium: "p",

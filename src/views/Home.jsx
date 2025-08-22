@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Heading, Paragraph } from '@/components/ui/typography';
 import Image from 'next/image';
 import { User } from 'lucide-react';
-import { Dashboard, Dashboard2, Dashboard3 } from '@/svg/Icon'
+
 
 function Home() {
   const userPreferences = useSelector((state) => state.userPreferences);
@@ -12,15 +12,15 @@ function Home() {
   const products = useSelector((state) => state.userProducts.products);
 
   return (
-    <div className="min-h-screen transition-colors duration-300">
+    <div className="flex flex-col w-full">
       {/* User Info */}
-      <div className="flex items-center gap-4 mb-6 justify-end">
+      <div className="flex items-center gap-2 mb-6 justify-end">
         {/* Username */}
         <div>
-          <Heading level="medium" className="font-[500] text-dark">
+          <Heading level="normal" className="font-[800] text-dark">
             {userPreferences.username}
           </Heading>
-          <Heading level="medium" className="text-extraLight">
+          <Heading level="normal" className="text-light">
             {userPreferences.email}
           </Heading>
         </div>
@@ -44,24 +44,25 @@ function Home() {
       </div>
 
       {/* Dashboard Title */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[var(--color-heading)] mb-2">
+      <div className="mb-[40px] sm:mb-[45px] md:mb-[50px] lg:mb-[55px] xl:mb-[60px] 2xl:mb-[64px]">
+        <Heading level="h1" className="font-bold text-dark mb-2">
           Dashlite Overview
-        </h1>
-        <Paragraph size="medium" className="text-[var(--color-text)]">
+        </Heading>
+        <Paragraph size="large" className="text-normal">
           Welcome back! Here’s an overview of your CMS content.
         </Paragraph>
       </div>
 
+
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-        <div className="p-4 rounded-lg shadow bg-[var(--color-primary)] text-white flex flex-col items-center">
-          <h2 className="text-lg font-semibold">Products</h2>
-          <p className="text-xl font-bold">{products?.length || 0}</p>
+      <div className="flex gap-3 md:gap-5">
+        <div className="aspect-square w-[250px] rounded-[8px] shadow bg-[var(--chart-3)] text-white flex flex-col items-center justify-center">
+          <Heading level="cardh1" className="font-[900] font-roboto">{products?.length || 0}</Heading>
+          <Paragraph size="xxl" className="font-bold">Products</Paragraph>
         </div>
-        <div className="p-4 rounded-lg shadow bg-[var(--color-primary)] text-white flex flex-col items-center">
-          <h2 className="text-lg font-semibold">Blogs</h2>
-          <p className="text-xl font-bold">{blogs?.length || 0}</p>
+        <div className="aspect-square w-[250px] rounded-[8px] shadow bg-[var(--chart-2)] text-white flex flex-col items-center justify-center">
+           <Heading level="cardh1" className="font-[900] font-roboto">{blogs?.length || 0}</Heading>
+          <Paragraph size="xxl" className="font-bold">Blogs</Paragraph>
         </div>
       </div>
     </div>

@@ -19,8 +19,8 @@
   --color-primary-border: var(--primary-border);
   --color-primary-page-bg: var(--primary-page-bg);
   --color-primary-card-bg: var(--primary-card-bg);
-  
-/* Mapped shadow variables */
+
+  /* Mapped shadow variables */
   --shadow-light-color: var(--shadow-light);
   --shadow-medium-color: var(--shadow-medium);
   --shadow-heavy-color: var(--shadow-heavy);
@@ -52,7 +52,7 @@
   --color-positive: var(--positive);
 
   /* Utility colors */
-  
+
   --color-primary-foreground: var(--primary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -99,14 +99,19 @@
   /* Primary */
   --primary: #816bff;
   --primary-border: #b7a6ff;
---primary-page-bg: #fbfaff;  /* Much lighter than #f5f3ff */
---primary-card-bg: #fdfcff;  /* Almost white but keeps a subtle tint */
+  --primary-page-bg: #fbfaff;
+  /* Much lighter than #f5f3ff */
+  --primary-card-bg: #fdfcff;
+  /* Almost white but keeps a subtle tint */
 
 
-    /* Shadow colors */
-  --shadow-light: rgba(129, 107, 255, 0.1);   /* very soft, subtle shadow */
-  --shadow-medium: rgba(129, 107, 255, 0.2);  /* medium shadow */
-  --shadow-heavy: rgba(129, 107, 255, 0.3);   /* more prominent shadow */
+  /* Shadow colors */
+  --shadow-light: rgba(129, 107, 255, 0.1);
+  /* very soft, subtle shadow */
+  --shadow-medium: rgba(129, 107, 255, 0.2);
+  /* medium shadow */
+  --shadow-heavy: rgba(129, 107, 255, 0.3);
+  /* more prominent shadow */
 
   /* Base */
   --radius: 0.625rem;
@@ -135,11 +140,14 @@
   --ring: var(--primary);
 
   /* Charts */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+--chart-1: oklch(0.646 0.222 41.116);  /* Base tone */
+--chart-2: oklch(0.646 0.222 184.704); /* Balanced tone */
+--chart-3: oklch(0.646 0.222 227.392); /* Balanced tone */
+--chart-4: oklch(0.646 0.222 316);     /* Balanced tone */
+--chart-5: oklch(0.646 0.222 44);      /* Balanced tone */
+
+
+
 
   /* Sidebar */
   --sidebar: oklch(0.985 0 0);
@@ -159,10 +167,12 @@
   /* Primary */
   --primary: #816bff;
   --primary-border: #6650cc;
-  --primary-page-bg: #12121a;  /* darker than #1a1a26 */
-  --primary-card-bg: #1a1a24;  /* darker than #222233 */
+  --primary-page-bg: #12121a;
+  /* darker than #1a1a26 */
+  --primary-card-bg: #1a1a24;
+  /* darker than #222233 */
 
-   /* Shadow colors */
+  /* Shadow colors */
   --shadow-light: rgba(129, 107, 255, 0.2);
   --shadow-medium: rgba(129, 107, 255, 0.3);
   --shadow-heavy: rgba(129, 107, 255, 0.5);

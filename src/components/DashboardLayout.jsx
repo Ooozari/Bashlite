@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Scrollable Content */}
-        <div className="container px-[20px] sm:px-[22px] md:px-[24px] lg:px-[26px] xl:px-[28px] 2xl:px-[30px] overflow-y-auto mb-[100px] pt-[30px] sm:pt-[32px] md:pt-[34px] lg:pt-[36px] xl:pt-[38px] 2xl:pt-[40px]">
+        <div className="px-[20px] sm:px-[22px] md:px-[24px] lg:px-[26px] xl:px-[28px] 2xl:px-[30px] overflow-y-auto mb-[100px] pt-[30px] sm:pt-[32px] md:pt-[34px] lg:pt-[36px] xl:pt-[38px] 2xl:pt-[40px]">
           {children}
         </div>
       </div>
