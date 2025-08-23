@@ -14,7 +14,7 @@ function DisplayBlogs() {
                     className={`grid gap-3 justify-start ${
                         blogs.length <= 1
                             ? "grid-cols-[repeat(auto-fit,minmax(0px,400px))]"
-                            : "grid-cols-[repeat(auto-fit,minmax(340px,1fr))]"
+                            : "grid-cols-[repeat(auto-fit,minmax(280px,1fr))]"
                     }`}
                 >
                     {blogs.map(blog => (

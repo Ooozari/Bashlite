@@ -13,9 +13,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateBlog } from '@/features/blogsSlice';
 import { toast } from 'sonner';
 import { setSessionHistory } from '@/features/sessionHistorySlice'
+import {ArrowLeft} from 'lucide-react'
+import { useRouter } from 'next/navigation';
 
 
 function EditBlog({ blogId }) {
+    const router = useRouter();
     const dispatch = useDispatch();
 
     const blogData = useSelector(state =>
@@ -53,6 +56,13 @@ function EditBlog({ blogId }) {
 
     return (
         <div className='w-full'>
+            <div>
+                <Button onClick={()=>{router.push('/blogs')}}>
+                    <ArrowLeft />
+                    Back
+                </Button>
+            </div>
+
             <div className='md:w-[75%] w-full mx-auto'>
                 <div>
                     {/* Form Heading */}

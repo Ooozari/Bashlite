@@ -26,12 +26,12 @@ function BlogCard({ id, title, content, author, date }) {
             </Paragraph>
 
             {/* Blog Title */}
-            <Heading level='h4' className='text-normal capitalize font-bold font-roboto mb-2 line-clamp-2'>
+            <Heading level='h4' className='text-normal capitalize font-bold font-roboto mb-2 line-clamp-2 break-all'>
                 {title}
             </Heading>
 
             {/* Blog Excerpt */}
-            <Paragraph size='normal' className='text-light'>{content}</Paragraph>
+            <Paragraph size='normal' className='text-light break-all'>{content}</Paragraph>
         </div>
     )
 }
