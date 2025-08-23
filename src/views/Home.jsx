@@ -26,7 +26,7 @@ function Home() {
         </div>
 
         {/* Avatar */}
-        <div className='w-[40px] h-[40px] sm:w-[42px] sm:h-[42px] md:w-[44px] md:h-[44px] lg:w-[46px] lg:h-[46px] xl:w-[48px] xl:h-[48px] 2xl:w-[50px] 2xl:h-[50px] relative  '>
+        <div className='w-[44px] h-[44px] md:w-[46px] md:h-[46px] xl:w-[48px] xl:h-[48px] 2xl:w-[50px] 2xl:h-[50px] relative '>
           {userPreferences.avatar ? (
             <Image
               src={userPreferences.avatar}

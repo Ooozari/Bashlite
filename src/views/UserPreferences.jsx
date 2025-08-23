@@ -365,7 +365,6 @@ function UserPreferences() {
                                                             );
                                                             dispatch(removeFavorites({ category: "books", index: index, }));
 
-
                                                         }}
                                                         className="size-3 cursor-pointer"
                                                     />
