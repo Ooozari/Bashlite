@@ -293,7 +293,7 @@ function UserPreferences() {
                                                             dispatch(
                                                                 removeFavorites({
                                                                     category: "movies",
-                                                                    item: movies,
+                                                                    index: index,
                                                                 })
                                                             )
                                                             // Add to session history
@@ -363,7 +363,7 @@ function UserPreferences() {
                                                                     actionType: `Deleted book: ${book}`,
                                                                 })
                                                             );
-                                                            dispatch(removeFavorites({ category: "books", item: book }));
+                                                            dispatch(removeFavorites({ category: "books", index: index, }));
 
 
                                                         }}

@@ -56,9 +56,9 @@ export const userPreferencesSlice = createSlice({
 
         },
         removeFavorites: (state, action) => {
-            const { category, item } = action.payload;
+            const { category, index } = action.payload;
             if (state.favorites[category]) {
-                state.favorites[category] = state.favorites[category].filter(fav => fav !== item)
+                state.favorites[category] = state.favorites[category].filter((_, i) => i !== index);
             }
         },
         removeAllFavorites: (state, action) => {
