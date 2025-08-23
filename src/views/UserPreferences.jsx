@@ -99,11 +99,11 @@ function UserPreferences() {
                     item: values.movie,
                 })
             );
-            // Add to session history
+            
             dispatch(
                 setSessionHistory({
-                    pageName: "User Preferences", // or wherever this form is located
-                    pageUrl: window.location.pathname, // current URL
+                    pageName: "User Preferences", 
+                    pageUrl: window.location.pathname, 
                     actionType: `Added favorite movie: "${values.movie}"`,
                 })
             );
@@ -137,7 +137,6 @@ function UserPreferences() {
 
             resetForm();
             setopenAddBookDialog(false)
-            toast.error(`Failed to add "${values.book}" to your favorites.`);
         },
     });
 
@@ -500,7 +499,6 @@ function UserPreferences() {
                                 </div>
                                 <Button className="" variant="destructive" onClick={() => {
                                     setopenConfirmResetDialog(true)
-
                                 }
 
                                 }>
@@ -719,6 +717,7 @@ function UserPreferences() {
                                     dispatch(clearAllProducts())
                                     dispatch(clearAllBlogs())
                                     setopenConfirmResetDialog(false)
+                                    toast.success("All data has been successfully reset.")
                                 }}
                                 variant='destructive'
                                 className='w-full'

@@ -28,7 +28,7 @@ function DisplayProduct() {
           ))}
         </div>
       ) : (
-        <Paragraph size='xxl' className="text-extraLight text-center font-[500]">
+        <Paragraph size='xl' className="text-extraLight text-center font-[500]">
           No products available. Please add a product to view it here.
         </Paragraph>
       )}

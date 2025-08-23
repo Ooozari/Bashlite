@@ -33,6 +33,11 @@ import { Package } from 'lucide-react';
 import { addProduct, deleteProduct, updateProduct } from '@/features/productsSlice';
 import { fileToBase64 } from '@/utils/fileHelpers';
 import { setSessionHistory } from '@/features/sessionHistorySlice'
+import { toast } from 'sonner';
+
+
+
+
 function ManageProducts() {
     const products = useSelector((state) => state.userProducts.products)
     const [openEditProductDialog, setopenEditProductDialog] = useState(false)
@@ -67,7 +72,7 @@ function ManageProducts() {
                     actionType: `Edited a product: ${values.name}`,
                 })
             );
-
+            toast.success("Product details updated successfully.")
             setopenEditProductDialog(false)
         },
     });
@@ -196,7 +201,7 @@ function ManageProducts() {
                             </TableRow>))) : (
                             <TableRow>
                                 <TableCell colSpan={5} className="text-center">
-                                    <Paragraph size='xxl' className="text-extraLight">No data to display</Paragraph>
+                                    <Paragraph size='xl' className="text-extraLight">No data to display</Paragraph>
 
                                 </TableCell>
                             </TableRow>

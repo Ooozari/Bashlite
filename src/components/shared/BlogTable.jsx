@@ -87,7 +87,7 @@ function BlogTable() {
                         ))
                     ) : (<TableRow>
                         <TableCell colSpan={5} className="text-center">
-                            <Paragraph size='xxl' className="text-extraLight">No data to display</Paragraph>
+                            <Paragraph size='xl' className="text-extraLight">No data to display</Paragraph>
 
                         </TableCell>
                     </TableRow>)}

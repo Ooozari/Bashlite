@@ -26,7 +26,7 @@ function BlogCard({ id, title, content, author, date }) {
             </Paragraph>
 
             {/* Blog Title */}
-            <Heading level='h4' className='text-normal capitalize font-bold font-roboto mb-2 line-clamp-3'>
+            <Heading level='h4' className='text-normal capitalize font-bold font-roboto mb-2 line-clamp-2'>
                 {title}
             </Heading>
 

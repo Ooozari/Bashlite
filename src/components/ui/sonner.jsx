@@ -1,26 +1,28 @@
-"use client"
+'use client'
 
-import { useTheme } from "next-themes"
-import { Toaster as Sonner } from "sonner";
+import { useTheme } from 'next-themes'
+import { Toaster as Sonner } from 'sonner'
 
-const Toaster = ({
-  ...props
-}) => {
-  const { theme = "system" } = useTheme()
+export function Toaster({ ...props }) {
+  const { theme = 'system' } = useTheme()
 
   return (
     <Sonner
       theme={theme}
+      position="top-right"
       className="toaster group"
-      style={
-        {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)"
-        }
-      }
-      {...props} />
-  );
-}
+      toastOptions={{
+        style: {
+          '--success-text': '#16a34a', // Green for success
+          '--error-text': '#dc2626',   // Red for error
+        },
+        classNames: {
+          success: 'group-[.toast]:!text-[var(--success-text)]',
+          error: 'group-[.toast]:!text-[var(--error-text)]',
+        },
+      }}
+      {...props}
+    />
 
-export { Toaster }
+  )
+}
