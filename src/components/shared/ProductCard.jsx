@@ -7,15 +7,16 @@ import { Tags } from 'lucide-react'
 function ProductCard({ imgUrl, name, price, category }) {
     return (
         <>
-            <div className='flex flex-col shadow-[0_4px_20px_var(--shadow-light)]'>
+            <div className='flex flex-col shadow-[0_4px_20px_var(--shadow-heavy-color)] '>
                 {/* Img */}
                 <div className="relative h-[240px] w-full">
                     <Image
                         src={imgUrl}
                         alt="product img"
                         fill
-                        className="object-cover rounded-t-[4px]"
+                        className="w-full h-full object-cover rounded-t-[4px]"
                     />
+
                 </div>
 
                 <div className='bg-card px-4 py-3 rounded-b-[4px] flex flex-col gap-[10px] w-full '>

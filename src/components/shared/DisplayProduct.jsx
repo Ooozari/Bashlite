@@ -12,7 +12,7 @@ function DisplayProduct() {
 
     <>
       {products.length > 0 ? (
-        <div className={`grid gap-5 justify-center sm:justify-start ${products.length <= 2
+        <div className={`grid gap-5 justify-center sm:justify-start py-5 ${products.length <= 2
           ? "[grid-template-columns:repeat(auto-fit,minmax(260px,300px))]"
           : "[grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]"
           }`}
