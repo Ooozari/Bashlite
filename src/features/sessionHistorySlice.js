@@ -29,7 +29,7 @@ export const  sessionHistorySlice = createSlice({
         },
        
         clearSessionHistory: (state, action) => {
-           state.length = 0;
+           return [];
         },
 
     }

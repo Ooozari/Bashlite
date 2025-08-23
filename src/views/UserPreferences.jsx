@@ -10,8 +10,8 @@ import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
 import { User2, User, Pencil, X, Palette, BookHeart, CookingPot, History } from 'lucide-react';
 import { addFavorites, removeFavorites, removeAllFavorites, resetAllPreferences, updateTheme } from "@/features/userPreferencesSlice"
-import {clearAllProducts} from '@/features/productsSlice'
-import {clearAllBlogs} from '@/features/blogsSlice'
+import { clearAllProducts } from '@/features/productsSlice'
+import { clearAllBlogs } from '@/features/blogsSlice'
 
 import { setSessionHistory, clearSessionHistory } from '@/features/sessionHistorySlice'
 import { toast } from "sonner"
@@ -425,13 +425,16 @@ function UserPreferences() {
                             <Paragraph size="normal" className="text-light">
                                 Clear all session history. This action cannot be undone.
                             </Paragraph>
-                            <Paragraph
-                                size="normal"
-                                onClick={() => dispatch(clearSessionHistory())}
-                                className="font-[800] text-destructive hover:cursor-pointer whitespace-nowrap"
-                            >
-                                Clear All
-                            </Paragraph>
+                            <button onClick={() => dispatch(clearSessionHistory())}>
+                                <Paragraph
+                                    size="normal"
+                                    className="font-[800] text-destructive hover:cursor-pointer whitespace-nowrap"
+                                >
+
+                                    Clear All
+                                </Paragraph>
+                            </button>
+
                         </div>
 
                         <div className="max-h-[400px] overflow-y-auto">
@@ -497,7 +500,7 @@ function UserPreferences() {
                                 </div>
                                 <Button className="" variant="destructive" onClick={() => {
                                     setopenConfirmResetDialog(true)
-                                    
+
                                 }
 
                                 }>
