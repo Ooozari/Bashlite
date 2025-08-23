@@ -3,30 +3,23 @@ import { loadFromLocalStorage } from "@/libs/storage";
 
 
 const defaultState = {
-    username: "Guest User",
-    email: "guest123@gmail.com",
+    username: "Guest1234",
+    email: "guest1234@gmail.com",
     avatar: null,
     theme: "light",
-    colorTheme: {
-        primary: "#816bff",
-        primaryVariants: {
-            border: "#b7a6ff",
-            pageBg: "#f5f3ff",
-            cardBg: "#faf9ff",
-        },
-    },
+    colorScheme: "purple",
     favorites: {
-        movies: ["Redemption"],
-        books: ["The Catche"],
+        movies: ["The Shawshank Redemption", "Inception", "The Dark Knight", "Forrest Gump", "Interstellar"],
+        books: ["The Catcher in the Rye", "To Kill a Mockingbird", "1984", "The Great Gatsby", "Pride and Prejudice"],
     },
     sessionHistory: [],
 };
-// ✅ hydrate directly from localStorage at startup
+
+
 const initialState = loadFromLocalStorage("userPreferences", defaultState);
 
 
 // SLices
-
 export const userPreferencesSlice = createSlice({
     name: "userPreferences",
     initialState,
@@ -41,9 +34,9 @@ export const userPreferencesSlice = createSlice({
         updateTheme: (state, action) => {
             state.theme = action.payload
         },
-        // updateColorTheme: (state, action) => {
-        //     state.theme = action.payload.theme
-        // },
+        updateColorScheme: (state, action) => {
+            state.colorScheme = action.payload
+        },
 
         // Favorites 
         addFavorites: (state, action) => {
@@ -52,7 +45,7 @@ export const userPreferencesSlice = createSlice({
                 state.favorites[category] = []; // initialize if missing
             }
             state.favorites[category].push(item)
-            
+
 
         },
         removeFavorites: (state, action) => {
@@ -80,7 +73,7 @@ export const userPreferencesSlice = createSlice({
 export const {
     updateProfile,
     updateTheme,
-    // updateColorTheme,
+    updateColorScheme,
     addFavorites,
     removeFavorites,
     removeAllFavorites,

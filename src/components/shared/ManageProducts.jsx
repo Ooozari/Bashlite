@@ -223,7 +223,7 @@ function ManageProducts() {
                     >
                         <div className='flex gap-6 items-center'>
                             {/* Product Picture Field */}
-                            {addProductFormik.values.imageURL ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-amber-400 relative'>
+                            {addProductFormik.values.imageURL ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative'>
                                 <img
                                     src={addProductFormik.values.imageURL}
                                     alt="user avatar"

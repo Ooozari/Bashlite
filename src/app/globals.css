@@ -38,6 +38,11 @@
   --color-profile-icon: var(--profile-fallback-icon);
 
 
+  /* Theme colors */
+
+  --color-purple: var(--color-purple);
+  --color-teal: var(--color-teal);
+  --color-blue: var(--color-deep-blue);
 
   /* Mapped shadow variables */
   --shadow-light-color: var(--shadow-light);
@@ -73,7 +78,6 @@
   --color-positive: var(--positive);
 
   /* Utility colors */
-
   --color-primary-foreground: var(--primary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -128,6 +132,17 @@
   --primary-card-bg: #fdfcff;
   /* Almost white but keeps a subtle tint */
   --tab-bg: #d8d0ff;
+
+
+
+
+/* Primary Colors */
+--color-purple: #816bff;      /* Creative & modern */
+--color-teal: #0ca6a6;        /* Fresh & balanced */
+--color-deep-blue: #023e8a;   /* Professional & enterprise-ready */
+
+
+
 
   /* Icons */
   --profile-fallback-bg: #d9d9d9;
@@ -213,6 +228,8 @@
   --tab-bg: #2f2a4a;
   --table-header-bg: #2a2547;
 
+
+  
   --profile-fallback-bg: #3a3a3a;
   /* Darker gray background */
   --profile-fallback-icon: #c0c0c0;

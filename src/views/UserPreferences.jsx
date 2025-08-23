@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
 import { User2, User, Pencil, X, Palette, BookHeart, CookingPot, History } from 'lucide-react';
-import { addFavorites, removeFavorites, removeAllFavorites, resetAllPreferences, updateTheme } from "@/features/userPreferencesSlice"
+import { addFavorites, removeFavorites, removeAllFavorites, resetAllPreferences, updateTheme, updateColorScheme } from "@/features/userPreferencesSlice"
 import { clearAllProducts } from '@/features/productsSlice'
 import { clearAllBlogs } from '@/features/blogsSlice'
 
@@ -44,6 +44,10 @@ import {
 } from "@/components/ui/select"
 import { updateProfile, } from "@/features/userPreferencesSlice";
 import { fileToBase64 } from '@/utils/fileHelpers';
+import { themePalettes } from '@/data/index'
+
+
+
 
 function UserPreferences() {
     const dispatch = useDispatch();
@@ -55,6 +59,7 @@ function UserPreferences() {
     const [openAddBookDialog, setopenAddBookDialog] = useState(false);
     const [openConfirmResetDialog, setopenConfirmResetDialog] = useState(false);
     const theme = useSelector((state) => state.userPreferences.theme);
+    const colorScheme = useSelector((state) => state.userPreferences.colorScheme);
 
     const editProfileFormik = useFormik({
         initialValues: {
@@ -99,11 +104,11 @@ function UserPreferences() {
                     item: values.movie,
                 })
             );
-            
+
             dispatch(
                 setSessionHistory({
-                    pageName: "User Preferences", 
-                    pageUrl: window.location.pathname, 
+                    pageName: "User Preferences",
+                    pageUrl: window.location.pathname,
                     actionType: `Added favorite movie: "${values.movie}"`,
                 })
             );
@@ -149,6 +154,38 @@ function UserPreferences() {
             editProfileFormik.setFieldValue("avatar", base64);
         }
     };
+
+
+    const applyThemeColors = (scheme) => {
+        const colors = themePalettes[scheme];
+        if (!colors) return;
+
+        // Update :root for light theme
+        const lightColors = colors.light;
+        Object.keys(lightColors).forEach((key) => {
+            document.documentElement.style.setProperty(key, lightColors[key]);
+        });
+
+        // Update .dark for dark theme overrides
+        const darkColors = colors.dark;
+        const darkRoot = document.querySelector(".dark");
+        if (darkRoot) {
+            Object.keys(darkColors).forEach((key) => {
+                darkRoot.style.setProperty(key, darkColors[key]);
+            });
+        }
+    };
+
+
+    const handleColorSchemeChange = (value) => {
+        // 1. Dispatch Redux action
+        dispatch(updateColorScheme(value));
+
+        // 2. Call any other logic you want, like updating theme classes
+        applyThemeColors(value);
+
+    };
+
 
 
     return (
@@ -239,23 +276,25 @@ function UserPreferences() {
                                 </div>
 
                                 {/* Theme color preview blocks */}
-                                <Select>
+                                <Select
+                                    value={colorScheme}
+                                    onValueChange={handleColorSchemeChange}>
                                     <SelectTrigger className="w-full md:w-[180px]">
                                         <SelectValue placeholder="Select scheme" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="purple"><div className="flex items-center gap-1">
-                                            <div className="w-5 h-5 rounded bg-[#816bff]" />
-                                            <Paragraph size="sm">Purple</Paragraph>
+                                            <div className="w-5 h-5 rounded bg-purple" />
+                                            <Paragraph size="sm">Royal Purple</Paragraph>
                                         </div></SelectItem>
-                                        <SelectItem value="blue"><div className="flex items-center gap-1">
-                                            <div className="w-5 h-5 rounded bg-[#3B82F6]" />
-                                            <Paragraph size="sm">Blue</Paragraph>
+                                        <SelectItem value="teal"><div className="flex items-center gap-1">
+                                            <div className="w-5 h-5 rounded bg-teal" />
+                                            <Paragraph size="sm">Teal Breeze</Paragraph>
                                         </div>
                                         </SelectItem>
-                                        <SelectItem value="green"><div className="flex items-center gap-1">
-                                            <div className="w-5 h-5 rounded bg-[#22C55E]" />
-                                            <Paragraph size="sm">Green</Paragraph>
+                                        <SelectItem value="blue"><div className="flex items-center gap-1">
+                                            <div className="w-5 h-5 rounded bg-blue" />
+                                            <Paragraph size="sm">Deep Sapphire</Paragraph>
                                         </div></SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -264,6 +303,7 @@ function UserPreferences() {
                         </div>
 
                     </div>
+
                     {/* Favorite items list */}
                     <div className="border bg-primary-card-bg  rounded-[4px] px-6 pt-[17px] pb-4 flex flex-col gap-[20px]">
                         <div className="">
