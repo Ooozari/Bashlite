@@ -564,17 +564,17 @@ function UserPreferences() {
                         className="grid gap-6"
                     >
                         <div className='flex gap-6 items-center'>
-                            {editProfileFormik.values.avatar ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 relative'>
+                            {editProfileFormik.values.avatar ? (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-[72px] 2xl:h-[72px] relative'>
                                 <Image
                                     src={editProfileFormik.values.avatar}
                                     alt="user avatar"
                                     fill
                                     className="object-cover w-full h-full rounded-[4px]"
                                 />
-                            </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-accent flex items-center justify-center rounded-[4px]'>
+                            </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-[72px] 2xl:h-[72px] bg-accent flex items-center justify-center rounded-[4px]'>
                                 <User className='w-8 h-8 text-light' />
                             </div>)}
-                            <div className="flex flex-col gap-2 w-full">
+                            <div className="flex flex-col gap-2">
                                 <Label htmlFor="avatar">
                                     <Paragraph size="label">Profile Picture</Paragraph>
                                 </Label>

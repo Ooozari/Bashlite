@@ -233,7 +233,7 @@ function ManageProducts() {
                             </div>) : (<div className='w-14 h-14 sm:w-[60px] sm:h-[60px] md:w-[64px] md:h-[64px] lg:w-[68px] lg:h-[68px] xl:w-[70px] xl:h-[70px] 2xl:w-18 2xl:h-18 bg-accent flex items-center justify-center rounded-[4px]'>
                                 <Package className='w-8 h-8 text-light' />
                             </div>)}
-                            <div className="flex flex-col gap-2 w-full">
+                            <div className="flex flex-col gap-2">
                                 <Label htmlFor="imageURL">
                                     <Paragraph size="label">Product image</Paragraph>
                                 </Label>
