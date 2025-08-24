@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     Table,
     TableBody,
@@ -13,14 +13,12 @@ import { useFormik } from 'formik';
 import Image from 'next/image'
 
 import { Button } from "@/components/ui/button"
-import { Heading, Paragraph } from '@/components/ui/typography'
+import { Paragraph } from '@/components/ui/typography'
 import {
     Dialog,
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
     DialogDescription
 } from "@/components/ui/dialog";
 import { ErrorMessage } from '@/components/shared'

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { Heading, Paragraph } from '@/components/ui/typography'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"

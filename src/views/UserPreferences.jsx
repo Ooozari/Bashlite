@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Heading, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
-import { User2, User, Pencil, X, Palette, BookHeart, CookingPot, History } from 'lucide-react';
+import { User, Pencil, X, Palette, BookHeart, CookingPot, History } from 'lucide-react';
 import { addFavorites, removeFavorites, removeAllFavorites, resetAllPreferences, updateTheme, updateColorScheme } from "@/features/userPreferencesSlice"
 import { clearAllProducts } from '@/features/productsSlice'
 import { clearAllBlogs } from '@/features/blogsSlice'
@@ -155,27 +155,6 @@ function UserPreferences() {
         }
     };
 
-
-    // const applyThemeColors = (scheme) => {
-    //     const colors = themePalettes[scheme];
-    //     if (!colors) return;
-
-    //     // Update :root for light theme
-    //     const lightColors = colors.light;
-    //     Object.keys(lightColors).forEach((key) => {
-    //         document.documentElement.style.setProperty(key, lightColors[key]);
-    //     });
-
-    //     // Update .dark for dark theme overrides
-    //     const darkColors = colors.dark;
-    //     const darkRoot = document.querySelector(".dark");
-    //     if (darkRoot) {
-    //         Object.keys(darkColors).forEach((key) => {
-    //             darkRoot.style.setProperty(key, darkColors[key]);
-    //         });
-    //     }
-    // };
-
     const applyThemeColors = (scheme, theme) => {
         const colors = themePalettes[scheme];
         if (!colors) return;
@@ -200,10 +179,6 @@ function UserPreferences() {
             applyThemeColors(colorScheme, theme);
         }
     }, [theme, colorScheme]);
-
-
-
-
 
     return (
         <>

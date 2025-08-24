@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Heading, Paragraph } from "@/components/ui/typography";
+import { Heading } from "@/components/ui/typography";
 import Link from "next/link";
 import clsx from "clsx";
 import { Dashboard } from "@/svg/Icon";
@@ -11,7 +11,6 @@ import { Package, LayoutDashboard, BookText, Settings, PanelRight } from "lucide
 function Sidebar() {
     const blogs = useSelector((state) => state.userBlogs.blogs);
     const sessions = useSelector((state) => state.sessionHistory);
-    console.log("length of session", sessions.length)
     const products = useSelector((state) => state.userProducts.products);
     const pathname = usePathname();
     const [isExpanded, setIsExpanded] = useState(false);
