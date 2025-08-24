@@ -156,35 +156,52 @@ function UserPreferences() {
     };
 
 
-    const applyThemeColors = (scheme) => {
+    // const applyThemeColors = (scheme) => {
+    //     const colors = themePalettes[scheme];
+    //     if (!colors) return;
+
+    //     // Update :root for light theme
+    //     const lightColors = colors.light;
+    //     Object.keys(lightColors).forEach((key) => {
+    //         document.documentElement.style.setProperty(key, lightColors[key]);
+    //     });
+
+    //     // Update .dark for dark theme overrides
+    //     const darkColors = colors.dark;
+    //     const darkRoot = document.querySelector(".dark");
+    //     if (darkRoot) {
+    //         Object.keys(darkColors).forEach((key) => {
+    //             darkRoot.style.setProperty(key, darkColors[key]);
+    //         });
+    //     }
+    // };
+
+    const applyThemeColors = (scheme, theme) => {
         const colors = themePalettes[scheme];
         if (!colors) return;
 
-        // Update :root for light theme
-        const lightColors = colors.light;
-        Object.keys(lightColors).forEach((key) => {
-            document.documentElement.style.setProperty(key, lightColors[key]);
+        // Apply colors based on current theme
+        const themeColors = theme === "dark" ? colors.dark : colors.light;
+        Object.entries(themeColors).forEach(([key, value]) => {
+            document.documentElement.style.setProperty(key, value);
         });
-
-        // Update .dark for dark theme overrides
-        const darkColors = colors.dark;
-        const darkRoot = document.querySelector(".dark");
-        if (darkRoot) {
-            Object.keys(darkColors).forEach((key) => {
-                darkRoot.style.setProperty(key, darkColors[key]);
-            });
-        }
     };
-
 
     const handleColorSchemeChange = (value) => {
         // 1. Dispatch Redux action
         dispatch(updateColorScheme(value));
 
-        // 2. Call any other logic you want, like updating theme classes
-        applyThemeColors(value);
-
+        // 2. Apply colors with current theme
+        applyThemeColors(value, theme);
     };
+
+    useEffect(() => {
+        if (colorScheme && theme) {
+            applyThemeColors(colorScheme, theme);
+        }
+    }, [theme, colorScheme]);
+
+
 
 
 
@@ -551,6 +568,8 @@ function UserPreferences() {
                     </div>
                 </div>
             </div >
+
+
 
             {/* Edit Profile*/}
             < Dialog open={openEditProfileDialog} onOpenChange={setopenEditProfileDialog} >
