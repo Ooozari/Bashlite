@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Sidebar from '@/layout/Sidebar';
 import clsx from 'clsx';
-import { Menu } from 'lucide-react'; // Menu icon for mobile toggle
+import { PanelRight } from 'lucide-react'; 
 import { Heading } from './ui/typography';
 
 export default function DashboardLayout({ children }) {
@@ -42,9 +42,9 @@ export default function DashboardLayout({ children }) {
         )}
       >
         {/* Top Bar with Mobile Menu Icon */}
-        <div className="lg:hidden sticky top-0 left-0 w-full shadow-sm z-20 flex items-center justify-between px-4 py-2 bg-primary-page-bg">
+        <div className="lg:hidden sticky top-0 left-0 w-full z-20 flex items-center justify-between px-4 py-2 bg-primary-page-bg shadow-[0_1px_4px_var(--shadow-light-color)]">
           <button onClick={() => setIsSidebarOpen(true)}>
-            <Menu size={24} className="text-dark" />
+            <PanelRight size={24} className="text-dark" />
           </button>
           <Heading level='sectionheading' className="text-dark font-bold">BashLite</Heading>
         </div>
