@@ -46,7 +46,7 @@ function Sidebar() {
                             onClick={() => setIsExpanded(true)}
                         >
                             {isHovered ? (
-                                <PanelRight className="w-[18px] h-[18px] xl:w-5 xl:h-5 text-normal transition-all duration-200" />
+                                <PanelRight className="w-[18px] h-[18px] xl:w-5 xl:h-5 text-normal transition-all duration-200 " />
                             ) : (
                                 <Dashboard className="w-6 h-6 xl:w-7 xl:h-7 text-primary transition-all duration-200" />
                             )}
@@ -69,7 +69,7 @@ function Sidebar() {
                                 className="w-[18px] h-[18px] xl:w-5 xl:h-5 cursor-pointer"
                                 onClick={() => {
                                     setIsExpanded(false);
-                                    setIsHovered(false); // Reset hover state when collapsing
+                                    setIsHovered(false); 
                                 }}
 
                             >

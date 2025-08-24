@@ -14,6 +14,8 @@ export default function DashboardLayout({ children }) {
       {/* Desktop Sidebar - Collapsed but Sticky */}
       <div className="hidden lg:flex fixed left-0 top-0 h-full z-30">
         <Sidebar isExpanded={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+
+          
       </div>
 
       {/* Mobile Sidebar (Drawer) */}
@@ -30,7 +32,7 @@ export default function DashboardLayout({ children }) {
       {isSidebarOpen && (
         <div
           onClick={() => setIsSidebarOpen(false)}
-          className="fixed inset-0 bg-black opacity-40 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
         />
       )}
 
@@ -44,7 +46,7 @@ export default function DashboardLayout({ children }) {
         {/* Top Bar with Mobile Menu Icon */}
         <div className="lg:hidden sticky top-0 left-0 w-full z-20 flex items-center justify-between px-4 py-2 bg-primary-page-bg shadow-[0_1px_4px_var(--shadow-light-color)]">
           <button onClick={() => setIsSidebarOpen(true)}>
-            <PanelRight size={24} className="text-dark" />
+            <PanelRight size={24} className="text-dark " />
           </button>
           <Heading level='sectionheading' className="text-dark font-bold">BashLite</Heading>
         </div>

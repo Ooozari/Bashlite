@@ -8,6 +8,7 @@ function Input({
   ...props
 }) {
   return (
+
     <input
       type={type}
       data-slot="input"
@@ -18,6 +19,7 @@ function Input({
         className
       )}
       {...props} />
+        
   );
 }
 

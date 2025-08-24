@@ -7,7 +7,7 @@ function BlogCard({ id, title, content, author, date }) {
     const rounter = useRouter()
     return (
 
-        <div className='flex flex-col rounded-[6px] px-4 pt-[17px] pb-[16px]  transition w-full cursor-pointer hover:shadow-[4px_4px_6px_var(--shadow-heavy-color)] shadow-[4px_4px_6px_var(--shadow-medium-color)]'
+        <div className='flex flex-col rounded-[6px] px-4 pt-[17px] pb-[16px]  transition w-full cursor-pointer hover:shadow-[4px_4px_6px_var(--shadow-heavy-color)] shadow-[4px_4px_6px_var(--shadow-medium-color)] border'
             onClick={() => (rounter.push(`blogs/${id}`))}
         >
             {/* Date and Author */}

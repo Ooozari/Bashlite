@@ -2,13 +2,6 @@
 @import "tw-animate-css";
 
 
-
-
-
-
-
-
-/* Dark mode variant for Tailwind v4 */
 @custom-variant dark (&:is(.dark *));
 
 /* ============================= */
