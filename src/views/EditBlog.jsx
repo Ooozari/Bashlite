@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateBlog } from '@/features/blogsSlice';
 import { toast } from 'sonner';
 import { setSessionHistory } from '@/features/sessionHistorySlice'
-import {ArrowLeft} from 'lucide-react'
+import { ArrowLeft, SearchX } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 
 
@@ -25,7 +25,26 @@ function EditBlog({ blogId }) {
     );
 
     if (!blogData) {
-        return <Paragraph>Blog not found.</Paragraph>;
+        return (<>
+            <div className="md:w-[60%] w-full mx-auto my-[100px] flex flex-col gap-6">
+                <div>
+                    <Button onClick={() => { router.push('/blogs') }}>
+                        <ArrowLeft />
+                        Back
+                    </Button>
+                </div>
+                <Paragraph size="large" className="text-destructive font-medium flex items-center justify-center gap-1">
+                    <span>
+                        <SearchX className='text-extraLight' />
+                    </span>
+                    <span>
+                        Blog not found.
+                    </span>
+
+
+                </Paragraph>
+            </div>
+        </>)
     }
 
     const updateBlogFormik = useFormik({
@@ -56,7 +75,7 @@ function EditBlog({ blogId }) {
     return (
         <div className='w-full'>
             <div>
-                <Button onClick={()=>{router.push('/blogs')}}>
+                <Button onClick={() => { router.push('/blogs') }}>
                     <ArrowLeft />
                     Back
                 </Button>
