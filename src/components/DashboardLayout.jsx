@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Sidebar from '@/layout/Sidebar';
 import clsx from 'clsx';
 import { Menu } from 'lucide-react'; // Menu icon for mobile toggle
+import { Heading } from './ui/typography';
 
 export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -43,9 +44,9 @@ export default function DashboardLayout({ children }) {
         {/* Top Bar with Mobile Menu Icon */}
         <div className="lg:hidden sticky top-0 left-0 w-full shadow-sm z-20 flex items-center justify-between px-4 py-2 bg-primary-page-bg">
           <button onClick={() => setIsSidebarOpen(true)}>
-            <Menu size={24} className="text-gray-800" />
+            <Menu size={24} className="text-dark" />
           </button>
-          <h1 className="text-lg font-semibold">BashLite</h1>
+          <Heading level='sectionheading' className="text-dark font-bold">BashLite</Heading>
         </div>
 
         {/* Scrollable Content */}
