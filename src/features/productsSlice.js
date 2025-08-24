@@ -1,12 +1,12 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { loadFromLocalStorage } from "@/libs/storage";
+
 
 const defaultState = {
     products: [
     ],
 };
 
-const initialState = loadFromLocalStorage("userProducts", defaultState);
+const initialState = defaultState;
 
 // SLices
 export const ProductsSlice = createSlice({

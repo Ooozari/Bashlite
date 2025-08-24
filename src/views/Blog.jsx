@@ -10,7 +10,6 @@ import {ArrowLeft} from 'lucide-react'
 function Blog({ blogId }) {
     const router = useRouter();
     const dispatch = useDispatch();
-    console.log("This is blogId", blogId);
     const blog = useSelector(state =>
         state.userBlogs.blogs.find(blog => blog.id === blogId)
     );

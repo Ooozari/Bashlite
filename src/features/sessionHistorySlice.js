@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadFromLocalStorage } from "@/libs/storage";
 import { nanoid } from "@reduxjs/toolkit";
 
 
 const defaultState = []
 
 
-const initialState = loadFromLocalStorage("sessionHistory", defaultState);
+const initialState = defaultState;
 
 
 // SLices

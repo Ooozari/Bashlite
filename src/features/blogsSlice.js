@@ -1,5 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { loadFromLocalStorage } from "@/libs/storage";
+
 
 
 const defaultState = {
@@ -14,7 +14,7 @@ const defaultState = {
 };
 
 
-const initialState = loadFromLocalStorage("userBlogs", defaultState);
+const initialState = defaultState;
 
 
 // SLices

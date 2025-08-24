@@ -1,4 +1,3 @@
-// store.js
 import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
@@ -8,12 +7,14 @@ import blogsReducer from "@/features/blogsSlice";
 import productsReducer from "@/features/productsSlice";
 import sessionReducer from "@/features/sessionHistorySlice";
 
+// Persist config
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userPreferences","userBlogs", "userProducts", "sessionHistory"],
+  whitelist: ["userPreferences", "userBlogs", "userProducts", "sessionHistory"],
 };
 
+// Combine reducers
 const rootReducer = combineReducers({
   userPreferences: userPreferencesReducer,
   userBlogs: blogsReducer,
@@ -21,8 +22,11 @@ const rootReducer = combineReducers({
   sessionHistory: sessionReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// SSR-safe persisted reducer
+const isClient = typeof window !== "undefined";
+const persistedReducer = isClient ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
+// Configure store
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -33,4 +37,5 @@ export const store = configureStore({
     }),
 });
 
-export const persistor = persistStore(store);
+// SSR-safe persistor
+export const persistor = isClient ? persistStore(store) : null;

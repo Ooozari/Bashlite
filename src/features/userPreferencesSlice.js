@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadFromLocalStorage } from "@/libs/storage";
+
 
 
 const defaultState = {
@@ -12,11 +12,11 @@ const defaultState = {
         movies: ["The Shawshank Redemption", "Inception", "The Dark Knight", "Forrest Gump", "Interstellar"],
         books: ["The Catcher in the Rye", "To Kill a Mockingbird", "1984", "The Great Gatsby", "Pride and Prejudice"],
     },
-    sessionHistory: [],
+
 };
 
 
-const initialState = loadFromLocalStorage("userPreferences", defaultState);
+const initialState = defaultState;
 
 
 // SLices
@@ -59,11 +59,6 @@ export const userPreferencesSlice = createSlice({
             if (state.favorites[category]) {
                 state.favorites[category] = []
             }
-        },
-
-
-        setSessionHistory: (state, action) => {
-            state.theme = action.payload
         },
         resetAllPreferences: () => defaultState,
 
