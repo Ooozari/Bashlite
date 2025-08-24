@@ -6,4 +6,5 @@ export {default as WriteBlog} from './WriteBlog'
 export {default as ManageProducts} from './ManageProducts'
 export {default as ProductCard} from './ProductCard'
 export {default as DisplayProduct} from './DisplayProduct'
+export {default as ThemedLoader} from './ThemedLoader'
 

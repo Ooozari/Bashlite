@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono, Nunito, Roboto } from "next/font/google";
 import "./globals.css";
 import ReduxProviderWrapper from "@/components/ReduxProviderWrapper";
-import DashboardLayout from "@/components/DashboardLayout"; 
+import DashboardLayout from "@/components/DashboardLayout";
+
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -34,6 +35,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      
       <body
         className={`${nunito.variable} ${geistSans.variable} ${geistMono.variable} ${roboto.variable} font-sans antialiased`}
         style={{ fontFamily: "var(--font-nunito), sans-serif" }}

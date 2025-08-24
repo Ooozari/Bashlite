@@ -1,10 +1,11 @@
 "use client";
 import { Toaster } from "sonner";
-import { Loader2 } from "lucide-react";
+
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider, useSelector } from "react-redux";
 import { store, persistor } from "@/store";
 import { useEffect } from "react";
+import {ThemedLoader} from '@/components/shared'
 
 // --- Hook to sync theme ---
 function ThemeSyncer() {
@@ -34,15 +35,7 @@ function ThemeSyncer() {
   return null;
 }
 
-// --- Loader that respects theme ---
-function ThemedLoader() {
-  return (
-    <div className="flex items-center justify-center h-screen gap-2 text-primary transition-colors bg-primary-page-bg">
-      <Loader2 className="w-6 h-6 animate-spin" />
-      <span className="font-medium text-light">Loading...</span>
-    </div>
-  );
-}
+
 
 export default function ReduxProviderWrapper({ children }) {
   return (
