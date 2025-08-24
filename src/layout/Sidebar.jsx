@@ -27,7 +27,7 @@ function Sidebar() {
     return (
         <aside
             className={clsx(
-                "bg-primary-foreground h-screen shadow-[0px_1px_3px_0px_var(--primary)]  flex flex-col transition-all duration-300",
+                "bg-primary-page-bg h-screen shadow-[0px_1px_3px_0px_var(--primary)]  flex flex-col transition-all duration-300",
                 isExpanded
                     ? "md:w-[160px] lg:w-[180px] xl:w-[200px] 2xl:w-[210px]"
                     : "lg:w-[60px]"

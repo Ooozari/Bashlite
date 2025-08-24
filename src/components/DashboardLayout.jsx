@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }) {
         )}
       >
         {/* Top Bar with Mobile Menu Icon */}
-        <div className="lg:hidden sticky top-0 left-0 w-full bg-white shadow-sm z-20 flex items-center justify-between px-4 py-2">
+        <div className="lg:hidden sticky top-0 left-0 w-full shadow-sm z-20 flex items-center justify-between px-4 py-2 bg-primary-page-bg">
           <button onClick={() => setIsSidebarOpen(true)}>
             <Menu size={24} className="text-gray-800" />
           </button>
