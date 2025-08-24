@@ -67,7 +67,11 @@ function Sidebar() {
 
                             <div
                                 className="w-[18px] h-[18px] xl:w-5 xl:h-5 cursor-pointer"
-                                onClick={() => setIsExpanded(false)}
+                                onClick={() => {
+                                    setIsExpanded(false);
+                                    setIsHovered(false); // Reset hover state when collapsing
+                                }}
+
                             >
                                 <PanelRight className="w-full h-full text-normal transition-all duration-200" />
                             </div>
