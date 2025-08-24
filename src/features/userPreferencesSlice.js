@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const defaultState = {
     username: "Guest1234",
     email: "guest1234@gmail.com",

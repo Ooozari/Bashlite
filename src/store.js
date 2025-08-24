@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import { combineReducers } from "redux";
+
 import userPreferencesReducer from "@/features/userPreferencesSlice";
 import blogsReducer from "@/features/blogsSlice";
 import productsReducer from "@/features/productsSlice";

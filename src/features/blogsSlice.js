@@ -1,10 +1,8 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
-
-
 const defaultState = {
     blogs: [{
-        id: "1",
+        id: "apaoUOncY09BInCZ",
         title: "Simple Habits That Can Change Your Life",
         content: "Small daily habits can have a big impact on your overall well-being. From managing time better to improving mental health, every step counts. Learn easy strategies to stay motivated and productive. Incorporate these habits gradually for lasting results. Transform your routine and see noticeable positive changes in your life.",
         excerpt: "Small daily habits can have a big impact on your overall well-being. From managing time better to improving mental health, every step counts. Learn easy strategies to stay motivated and productive. Incorporate these habits gradually for lasting results. Transform your routine and see noticeable positive changes in your life.".slice(0, 200) + "...",
