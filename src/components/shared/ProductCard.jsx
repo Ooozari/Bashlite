@@ -7,7 +7,8 @@ import { Tags } from 'lucide-react'
 function ProductCard({ imgUrl, name, price, category }) {
     return (
         <>
-            <div className='flex flex-col shadow-[0_4px_20px_var(--shadow-heavy-color)] '>
+            <div className='flex flex-col 
+            shadow-[-2px_1px_4px_var(--shadow-heavy-color),3px_1px_4px_var(--shadow-light-color)]'>
                 {/* Img */}
                 <div className="relative h-[240px] w-full">
                     <Image
