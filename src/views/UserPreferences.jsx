@@ -53,7 +53,6 @@ function UserPreferences() {
     const dispatch = useDispatch();
     const userPreferences = useSelector((state) => state.userPreferences);
     const sessions = useSelector((state) => state.sessionHistory);
-    console.log("Sessions:", sessions);
     const [openEditProfileDialog, setopenEditProfileDialog] = useState(false);
     const [openAddMovieDialog, setopenAddMovieDialog] = useState(false);
     const [openAddBookDialog, setopenAddBookDialog] = useState(false);
@@ -175,10 +174,41 @@ function UserPreferences() {
     };
 
     useEffect(() => {
-        if (colorScheme && theme) {
-            applyThemeColors(colorScheme, theme);
-        }
+        if (!colorScheme) return;
+
+        const effectiveTheme =
+            theme === "system"
+                ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+                : theme;
+
+        applyThemeColors(colorScheme, effectiveTheme);
     }, [theme, colorScheme]);
+
+
+    useEffect(() => {
+        const root = document.documentElement;
+        const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+        function applyTheme(mode) {
+            root.classList.remove("light", "dark");
+            root.classList.add(mode);
+        }
+
+        if (theme === "system") {
+            // Initial system check
+            applyTheme(systemDark.matches ? "dark" : "light");
+
+            // Listen for OS theme changes
+            const handler = (e) => applyTheme(e.matches ? "dark" : "light");
+            systemDark.addEventListener("change", handler);
+
+            // Cleanup on unmount
+            return () => systemDark.removeEventListener("change", handler);
+        } else {
+            applyTheme(theme); // Apply light or dark directly
+        }
+    }, [theme]);
+
 
     return (
         <>
