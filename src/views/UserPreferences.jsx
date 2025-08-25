@@ -166,10 +166,7 @@ function UserPreferences() {
     };
 
     const handleColorSchemeChange = (value) => {
-        // 1. Dispatch Redux action
         dispatch(updateColorScheme(value));
-
-        // 2. Apply colors with current theme
         applyThemeColors(value, theme);
     };
 
@@ -180,7 +177,6 @@ function UserPreferences() {
             theme === "system"
                 ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
                 : theme;
-
         applyThemeColors(colorScheme, effectiveTheme);
     }, [theme, colorScheme]);
 
@@ -195,7 +191,7 @@ function UserPreferences() {
         }
 
         if (theme === "system") {
-            // Initial system check
+            
             applyTheme(systemDark.matches ? "dark" : "light");
 
             // Listen for OS theme changes
